@@ -8,6 +8,25 @@ class AnswersController < ApplicationController
   def index
     @answers = Answer.all
   end
+
+  def show
+  end
+
+  def new
+    @asnwer = @question.answers.new
+  end
+
+
+
+  def create
+    @answer = @question.answers.create(answer_params)
+    if @answer.save
+      redirect_to question_answer_path(@question,@answer)
+    else
+      render :new
+    end
+  end
+
   private
 
   def load_answer
