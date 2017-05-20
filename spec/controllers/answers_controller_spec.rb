@@ -6,12 +6,12 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'GET #index' do
     let(:answers) {create_list(:answer, 2, question: question)}
-    before {get :index, params: {question_id: question.id} }
+    before {get :index, params: {question_id: question} }
     it 'populates an array of all answers' do
       expect(assigns(:answers)).to match_array(answers)
     end
     it 'populates an array of question particular answers' do
-      expect(assigns(:answers)).to eq(question.reload.answers)
+      expect(assigns(:answers)).to eq(question.answers)
     end
     it 'renders index view' do
       expect(response).to render_template :index
@@ -19,7 +19,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #show' do
-    before {get :show, params: {question_id: question.id,
+    before {get :show, params: {question_id: question,
                                 id: answer} }
     it 'assigns the requested answer to @answer' do
       expect(assigns(:answer)).to eq answer
@@ -34,8 +34,11 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #new' do
-    before {get :new, params: {question_id: question.id}}
+    before {get :new, params: {question_id: question}}
     it 'assigns a new Answer to @answer' do
+      expect(assigns(:answer)).to be_a_new(Answer)
+    end
+    it 'check new answer to correspond question' do
       expect(assigns(:question).answers.first).to be_a_new(Answer)
     end
     it 'renders new view' do

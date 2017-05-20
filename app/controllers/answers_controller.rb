@@ -13,7 +13,7 @@ class AnswersController < ApplicationController
   end
 
   def new
-    @asnwer = @question.answers.new
+    @answer = @question.answers.new
   end
 
 
