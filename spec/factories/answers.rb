@@ -1,10 +1,11 @@
 FactoryGirl.define do
   factory :answer do
     body "MyText"
+    question
   end
 
   factory :invalid_answer, class: "Answer" do
-    question_id 1
     body nil
+    question
   end
 end
