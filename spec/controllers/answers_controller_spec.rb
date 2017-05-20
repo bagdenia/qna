@@ -3,7 +3,6 @@ require 'rails_helper'
 RSpec.describe AnswersController, type: :controller do
   let(:question) {create(:question)}
   let(:answer) {create(:answer, question: question)}
-  #let(:answer) {create(:question_with_answer)}
 
   describe 'GET #index' do
     let(:answers) {create_list(:answer, 2, question: question)}
