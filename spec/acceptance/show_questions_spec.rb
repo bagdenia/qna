@@ -5,7 +5,8 @@ feature 'Show questions list', %q{
   to browse list of all questions
 } do
   given(:user) { create(:user) }
-  background { create_list(:question, 2) }
+  given!(:questions) { create_list(:question, 2) }
+  #background { create_list(:question, 2) }
   scenario 'Authenticated user browses questions list' do
     sign_in(user)
 

@@ -18,5 +18,12 @@ to give my answer at question page
     expect(page).to have_content 'My answer'
   end
 
+  scenario 'Non-authenticated user try to give answer to the question' do
+    visit question_path question
+    fill_in 'Your answer', with: 'My answer'
+    click_on 'Create'
+    expect(page).to have_content 'You need to sign in or sign up before continuing'
+  end
+
 end
 
