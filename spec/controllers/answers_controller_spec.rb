@@ -21,6 +21,7 @@ RSpec.describe AnswersController, type: :controller do
   end
 
   describe 'GET #new' do
+    sign_in_user
     before {get :new, params: {question_id: question}}
     it 'assigns a new Answer to @answer' do
       expect(assigns(:answer)).to be_a_new(Answer)
@@ -35,6 +36,7 @@ RSpec.describe AnswersController, type: :controller do
 
 
   describe 'POST #create' do
+    sign_in_user
     context 'with valid attrs' do
       it 'saves new answer to db' do
         expect { post :create, params:{ question_id: question,

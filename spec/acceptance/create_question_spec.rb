@@ -15,6 +15,7 @@ feature 'Create question', %q{
     fill_in 'Body', with: 'why why why'
     click_on 'Create'
 
+    save_and_open_page
     expect(page).to have_content 'Your question successfully created'
   end
 
