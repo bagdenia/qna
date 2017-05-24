@@ -12,14 +12,6 @@ feature 'User sign in', %q{
     expect(current_path).to eq root_path
   end
 
-  scenario 'Registered user try to log out' do
-    sign_in(user)
-    click_on 'Log out'
-
-    expect(page).to have_content 'Signed out successfully'
-    expect(current_path).to eq root_path
-  end
-
   scenario 'Non registered user try to sign in' do
     visit new_user_session_path
     fill_in 'Email', with: 'wrong@test.com'

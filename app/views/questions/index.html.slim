@@ -1,3 +1,12 @@
-- @questions.each do |question|
-  p = link_to question.title, question
-p =link_to 'Ask question', new_question_path
+h2 = 'Questions:'
+table
+  - @questions.each do |question|
+    tr
+      td = link_to question.title, question
+      td = '  ' 
+      -if (user_signed_in?) && (current_user.id == question.user.id)
+        td =link_to 'delete', question, data: {confirm: 'Are you sure?'}, method: :delete
+
+
+-if user_signed_in?
+  p =link_to 'Ask question', new_question_path

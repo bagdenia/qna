@@ -1,8 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
-  let(:question) {create(:question)}
-  let(:answer) {create(:answer, question: question)}
+  let(:user) { create(:user) }
+  let(:question) {create(:question, user: user)}
+  let(:answer) {create(:answer, question: question, user: user)}
 
 
   describe 'GET #show' do
@@ -40,12 +41,14 @@ RSpec.describe AnswersController, type: :controller do
     context 'with valid attrs' do
       it 'saves new answer to db' do
         expect { post :create, params:{ question_id: question,
-                 answer: attributes_for(:answer)} }.to change(question.answers, :count).by(1)
+                                        user_id: user,
+         answer: attributes_for(:answer)} }.to change(question.answers, :count).by(1)
       end
       it 'redirects to show view' do
         post :create, params: { question_id: question,
+                                user_id: user,
                                 answer: attributes_for(:answer)}
-        expect(response).to redirect_to question_answer_path(question, assigns(:answer))
+        expect(response).to redirect_to assigns(:answer).question
       end
     end
 
@@ -61,6 +64,42 @@ RSpec.describe AnswersController, type: :controller do
       end
     end
   end
+
+  describe 'DELETE #destroy' do
+    before {user}
+    before {question}
+    before {answer}
+
+    context 'User can delete his answer' do
+      before do
+        @request.env['devise.mapping'] = Devise.mappings[user]
+        sign_in user
+      end
+      it 'delete answer' do
+        expect { delete :destroy, params: { id: answer} }.to change(Answer, :count).by(-1)
+      end
+      it 'redirect to question' do
+        delete :destroy, params: { id: answer}
+        expect(response).to redirect_to question
+      end
+    end
+
+    context 'User cant delete other user answer' do
+      before do
+        other_user = create(:user)
+        @request.env['devise.mapping'] = Devise.mappings[other_user]
+        sign_in other_user
+      end
+      it 'dsnt delete answer' do
+        expect { delete :destroy, params: { id: answer} }.to_not change(Answer, :count)
+      end
+      it 'redirect to question' do
+        delete :destroy, params: { id: answer}
+        expect(response).to redirect_to question
+      end
+    end
+  end
+
 
 end
 

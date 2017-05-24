@@ -1,9 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
-  let(:question) {create(:question)}
+  let(:user) { create(:user) }
+  let(:question) { create(:question, user: user) }
   describe 'GET #index' do
-    let(:questions)  { create_list(:question,2) }
+    let(:questions)  { create_list(:question,2,user: user) }
     before {get :index}
     it 'populates an array of all questions' do
       expect(assigns(:questions)).to match_array(questions)
@@ -14,9 +15,12 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'GET #show' do
-    before {get :show, params: { id: question}}
+    before {get :show, params: { user_id: user, id: question}}
     it 'assigns the requested question to @question' do
       expect(assigns(:question)).to eq question
+    end
+    it 'assigns the requested question to correspond @user' do
+      expect(assigns(:question).user).to eq  user
     end
     it 'renders show view' do
       expect(response).to render_template :show
@@ -55,7 +59,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
       it 'redirects to show view' do
          post :create, params: { question: attributes_for(:question) }
-         expect(response).to redirect_to assigns(:question)
+         expect(response).to redirect_to questions_path
       end
     end
     context 'with invalid attributes' do
@@ -98,14 +102,36 @@ RSpec.describe QuestionsController, type: :controller do
   end
 
   describe 'DELETE #destroy' do
-    sign_in_user
     before {question}
-    it 'delete question' do
-      expect { delete :destroy, params: { id: question} }.to change(Question, :count).by(-1)
+    before {user}
+
+    context 'User can delete his question' do
+      before do
+        @request.env['devise.mapping'] = Devise.mappings[:user]
+        sign_in user
+      end
+      it 'delete question' do
+        expect { delete :destroy, params: { id: question} }.to change(Question, :count).by(-1)
+      end
+      it 'redirect to index view' do
+        delete :destroy, params: { id: question}
+        expect(response).to redirect_to questions_path
+      end
     end
-    it 'redirect to index view' do
-      delete :destroy, params: { id: question}
-      expect(response).to redirect_to questions_path
+
+    context 'User cant  delete other user question' do
+      before do
+        other_user = create(:user)
+        @request.env['devise.mapping'] = Devise.mappings[other_user]
+        sign_in other_user
+      end
+      it 'delete question' do
+        expect { delete :destroy, params: { id: question} }.to_not change(Question, :count)
+      end
+      it 'redirect to index view' do
+        delete :destroy, params: { id: question}
+        expect(response).to redirect_to questions_path
+      end
     end
   end
 

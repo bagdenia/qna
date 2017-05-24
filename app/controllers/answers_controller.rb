@@ -1,11 +1,15 @@
 class AnswersController < ApplicationController
-  before_action :authenticate_user!, except: [:index, :show]
-  before_action :load_question
+  before_action :authenticate_user!, except: [:show]
+  before_action :load_question, only: [:create, :new]
   before_action :load_answer, only: [:show, :edit, :update, :destroy]
 
+  def index
+
+  end
 
   def show
   end
+
 
   def new
     @answer = @question.answers.new
@@ -14,18 +18,29 @@ class AnswersController < ApplicationController
 
 
   def create
-    @answer = @question.answers.create(answer_params)
+    @answer = @question.answers.new(answer_params)
+    @answer.user = current_user
     if @answer.save
-      redirect_to question_answer_path(@question,@answer), notice: 'Your answer successfully created'
+      redirect_to @answer.question, notice: 'Your answer successfully created'
     else
       render :new
+    end
+  end
+
+  def destroy
+    @question = @answer.question
+    if current_user.id == @answer.user.id
+      @answer.destroy
+      redirect_to @question, notice: 'Answer successfully deleted'
+    else
+      redirect_to @question, notice: 'You cant delete this answer'
     end
   end
 
   private
 
   def load_answer
-    @answer = @question.answers.find(params[:id])
+    @answer = Answer.find(params[:id])
   end
 
   def load_question
