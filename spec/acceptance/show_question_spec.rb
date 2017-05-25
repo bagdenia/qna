@@ -15,11 +15,13 @@ feature 'Show question and it-s answer', %q{
     visit question_path(question)
     expect(page).to have_content question.title
     expect(page).to have_content question.answers.first.body
+    expect(page).to have_content question.answers.second.body
   end
 
   scenario 'Non-authenticated user browses questions list' do
     visit question_path(question)
     expect(page).to have_content question.title
     expect(page).to have_content question.answers.first.body
+    expect(page).to have_content question.answers.second.body
   end
 end

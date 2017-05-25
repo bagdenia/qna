@@ -3,9 +3,6 @@ class AnswersController < ApplicationController
   before_action :load_question, only: [:create, :new]
   before_action :load_answer, only: [:show, :edit, :update, :destroy]
 
-  def index
-
-  end
 
   def show
   end
@@ -29,7 +26,7 @@ class AnswersController < ApplicationController
 
   def destroy
     @question = @answer.question
-    if current_user.id == @answer.user.id
+    if current_user.id == @answer.user_id
       @answer.destroy
       redirect_to @question, notice: 'Answer successfully deleted'
     else

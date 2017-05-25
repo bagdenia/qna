@@ -10,9 +10,12 @@ to delete my answer at question page
   scenario 'User can delete his answer' do
     sign_in(user)
     visit question_path question
+    answer_body = answer.body
 
     click_on 'delete'
     expect(page).to have_content 'Answer successfully deleted'
+    expect(page).to have_no_content 'answer_body'
+
   end
 
   scenario 'User cant delete other user answer'do

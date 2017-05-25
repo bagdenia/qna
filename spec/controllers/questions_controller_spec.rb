@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe QuestionsController, type: :controller do
   let(:user) { create(:user) }
-  let(:question) { create(:question, user: user) }
+  let(:question) { create(:question, title: 'My title', body: 'My body', user: user) }
   describe 'GET #index' do
     let(:questions)  { create_list(:question,2,user: user) }
     before {get :index}
@@ -92,8 +92,8 @@ RSpec.describe QuestionsController, type: :controller do
 
       it 'does not change question attributes' do
         question.reload
-        expect(question.title).to eq 'MyString'
-        expect(question.body).to eq 'MyText'
+        expect(question.title).to eq 'My title'
+        expect(question.body).to eq 'My body'
       end
       it 're-render edit view' do
         expect(response).to render_template :edit

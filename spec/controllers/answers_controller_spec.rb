@@ -67,7 +67,6 @@ RSpec.describe AnswersController, type: :controller do
 
   describe 'DELETE #destroy' do
     before {user}
-    before {question}
     before {answer}
 
     context 'User can delete his answer' do
