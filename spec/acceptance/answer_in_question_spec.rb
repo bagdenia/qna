@@ -8,6 +8,7 @@ to give my answer at question page
   given(:question) { create(:question, user: user) }
   scenario 'Authenticated user try to give answer to the question', js: true do
     sign_in(user)
+    sleep(2)
     visit question_path question
 
     fill_in 'Your answer', with: 'My answer'
@@ -15,7 +16,7 @@ to give my answer at question page
 
 
     #expect(page).to have_content 'Your answer successfully created'
-    within  '.answers' do
+    within  '.answr' do
       expect(page).to have_content 'My answer'
     end
   end

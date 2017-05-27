@@ -2,8 +2,11 @@ h2 = 'Question:'
 p = @question.title
 p = @question.body
 
-.answers
-  = render 'answers'
+.answr
+  h2 = 'Answers:'
+  table
+    - @question.answers.each do |answer|
+      = render 'answer', answer: answer
 
 br
 -if user_signed_in?
