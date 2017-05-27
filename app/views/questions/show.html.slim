@@ -2,8 +2,15 @@ h2 = 'Question:'
 p = @question.title
 p = @question.body
 
-= render 'answers'
+.answers
+  = render 'answers'
 
+br
+-if user_signed_in?
+  =form_for [@question, Answer.new], remote: true do |f|
+    = f.label :body, 'Your answer'
+    = f.text_area :body
+    = f.submit 'Create'
 br
 
 = link_to 'List of questions', questions_path
