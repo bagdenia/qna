@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe AnswersController, type: :controller do
   let(:user) { create(:user) }
-  let(:question) {create(:question, user: user)}
+  let!(:question) {create(:question, user: user)}
   let(:answer) {create(:answer, question: question, user: user)}
 
 
@@ -96,6 +96,31 @@ RSpec.describe AnswersController, type: :controller do
         delete :destroy, params: { id: answer}
         expect(response).to redirect_to question
       end
+    end
+  end
+
+
+  describe 'PATCH #update' do
+    before {user}
+    before {answer}
+    before do
+      @request.env['devise.mapping'] = Devise.mappings[user]
+      sign_in user
+    end
+    it 'assigns the requested answer to @answer' do
+      patch :update, params: { id: answer, answer: attributes_for(:answer)}, format: :js
+      expect(assigns(:answer)).to eq answer
+    end
+
+    it 'changes answers attributes' do
+      patch :update, params: {id: answer, answer: {body: 'new body'}}, format: :js
+      answer.reload
+      expect(answer.body).to eq 'new body'
+    end
+
+    it 'render update template' do
+      patch :update, params: { id: answer, answer: attributes_for(:answer)}, format: :js
+      expect(response).to render_template :update
     end
   end
 

@@ -6,5 +6,11 @@ table
         td = answer.body
         -if (user_signed_in?) && (current_user.id == answer.user.id)
           td =link_to 'delete', answer, data: {confirm: 'Are you sure?'}, method: :delete
+          td =link_to 'edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
+          td 
+            = form_for [answer], remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
+              = f.label :body, 'Answer'
+              = f.text_area :body
+              = f.submit 'Save'
 
 

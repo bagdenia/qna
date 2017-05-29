@@ -7,9 +7,17 @@ class AnswersController < ApplicationController
   def show
   end
 
+  def edit
+  end
 
   def new
     @answer = @question.answers.new
+  end
+
+  def update
+    @answer = Answer.find(params[:id])
+    @answer.update(answer_params)
+    @question = @answer.question
   end
 
 

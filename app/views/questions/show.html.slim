@@ -4,9 +4,7 @@ p = @question.body
 
 .answr
   h2 = 'Answers:'
-  table
-    - @question.answers.each do |answer|
-      = render 'answer', answer: answer
+  = render 'answers'
 
 br
 -if user_signed_in?
