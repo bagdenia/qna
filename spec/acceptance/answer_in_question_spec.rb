@@ -1,4 +1,4 @@
-require 'rails_helper'
+require_relative 'acceptance_helper'
 
 feature 'Create answer in show question', %q{
 I want to be able
@@ -24,6 +24,15 @@ to give my answer at question page
   scenario 'Non-authenticated user try to give answer to the question' do
     visit question_path question
     expect(page).to have_no_content 'Your answer'
+  end
+
+  scenario 'User try to create invalid answer', js: true do
+    sign_in user
+    visit question_path(question)
+
+    click_on 'Create'
+
+    expect(page).to have_content "Body can't be blank"
   end
 
 end
