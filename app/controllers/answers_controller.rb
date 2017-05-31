@@ -15,9 +15,11 @@ class AnswersController < ApplicationController
   end
 
   def update
-    @answer = Answer.find(params[:id])
-    @answer.update(answer_params)
-    @question = @answer.question
+    if current_user.id == @answer.user_id
+      @answer = Answer.find(params[:id])
+      @answer.update(answer_params)
+      @question = @answer.question
+    end
   end
 
 

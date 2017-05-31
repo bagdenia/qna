@@ -135,5 +135,44 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
+  describe 'PATCH #update' do
+    before {user}
+    before {question}
+    context 'User can edit his question' do
+      before do
+        @request.env['devise.mapping'] = Devise.mappings[user]
+        sign_in user
+      end
+      it 'assigns the requested question to @question' do
+        patch :update, params: { id: answer, answer: attributes_for(:answer)}, format: :js
+        expect(assigns(:answer)).to eq answer
+      end
 
+      it 'changes answers attributes' do
+        patch :update, params: {id: answer, answer: {body: 'new body'}}, format: :js
+        answer.reload
+        expect(answer.body).to eq 'new body'
+      end
+
+      it 'render update template' do
+        patch :update, params: { id: answer, answer: attributes_for(:answer)}, format: :js
+        expect(response).to render_template :update
+      end
+    end
+
+    context 'User cant edit other user answer' do
+      before do
+        other_user = create(:user)
+        @request.env['devise.mapping'] = Devise.mappings[other_user]
+        sign_in other_user
+      end
+      it 'doesnt change answers attributes' do
+        patch :update, params: {id: answer, answer: {body: 'new body'}}, format: :js
+      end
+      it 'redirect to question' do
+        patch :update, params: {id: answer, answer: {body: 'new body'}}, format: :js
+        expect(response).to_not redirect_to question
+      end
+    end
+  end
 end

@@ -2,11 +2,11 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 ready = ->
-  $(document).on 'click', '.edit-answer-link', (e) ->
+  $(document).on 'click', '.edit-question-link', (e) ->
     e.preventDefault();
     $(this).hide();
-    answer_id = $(this).data('answerId')
-    $('form#edit-answer-' + answer_id).show()
+    question_id = $(this).data('questionId')
+    $('form#edit-question-' + question_id).show()
 
 $(document).on('turbolinks:load', ready)
 $(document).on('page:load', ready)

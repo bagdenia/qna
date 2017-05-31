@@ -1,0 +1,13 @@
+    tr
+      td = link_to question.title, question
+      td = '  ' 
+      -if (user_signed_in?) && (current_user.id == question.user.id)
+        td =link_to 'delete', question, data: {confirm: 'Are you sure?'}, method: :delete
+        td =link_to 'edit', '', class: 'edit-question-link', data: { question_id: question.id }
+        td 
+          = form_for [question], remote: true, html: { id: "edit-question-#{question.id}"} do |f|
+            = f.label :title, 'Title'
+            = f.text_area :title
+            = f.label :body, 'Body'
+            = f.text_area :body
+            = f.submit 'Save'

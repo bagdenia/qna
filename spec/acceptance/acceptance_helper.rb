@@ -1,7 +1,9 @@
 require 'rails_helper'
 
 RSpec.configure do |config|
-  Capybara.javascript_driver = :webkit
+  #Capybara.javascript_driver = :webkit
+  Capybara.server_host = "0.0.0.0"
+  Capybara.server_port = 3000
   config.include AcceptanceHelper, type: :feature
 
 
