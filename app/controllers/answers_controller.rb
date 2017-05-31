@@ -32,9 +32,6 @@ class AnswersController < ApplicationController
     @question = @answer.question
     if current_user.id == @answer.user_id
       @answer.destroy
-      redirect_to @question, notice: 'Answer successfully deleted'
-    else
-      redirect_to @question, notice: 'You cant delete this answer'
     end
   end
 
