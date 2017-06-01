@@ -3,5 +3,5 @@
     $('.question-errors').html('<%= j message %>')
   <% end %>
 <% else %>
-  $('.qstn').html('<%= j render 'questions/questions'%>');
+  $('#question-' + <%= @question.id %>).replaceWith('<%= j render @question %>');
 <% end %>

@@ -1,4 +1,4 @@
-    tr
+tr id = "question-#{question.id}"
       td = link_to question.title, question
       td = '  ' 
       -if (user_signed_in?) && (current_user.id == question.user.id)

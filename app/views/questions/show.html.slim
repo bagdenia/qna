@@ -4,7 +4,8 @@ p = @question.body
 
 h2 = 'Answers:'
 .answr
-  = render 'answers'
+  table
+    = render @question.answers 
 
 br
 -if user_signed_in?

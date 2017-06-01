@@ -5,4 +5,10 @@ module AcceptanceHelper
     fill_in 'Password', with: user.password
     click_on 'Log in'
   end
+
+  def with_hidden_fields
+    Capybara.ignore_hidden_elements = false
+    yield
+    Capybara.ignore_hidden_elements = true
+  end
 end

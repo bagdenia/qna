@@ -17,6 +17,7 @@ feature 'Answer editiong', %q{
   describe 'Authenticated user' do
     before do
       sign_in(user)
+      sleep(1)
       visit question_path(question)
     end
     scenario 'sees link to edit' do
@@ -26,14 +27,17 @@ feature 'Answer editiong', %q{
     end
 
     scenario 'try to edit his answer', js: true do
-      click_on 'edit'
-      within '.answr' do
-        fill_in 'Answer', with: 'edited answer'
-        click_on 'Save'
+      with_hidden_fields do
+        within '.answr' do
+          click_on 'edit'
+          fill_in 'Answer', with: 'edited answer'
+          pry
+          click_on 'Save'
 
-        expect(page).to_not have_content answer.body
-        expect(page).to have_content 'edited answer'
-        #expect(page).to_not have_selector 'textarea'
+          expect(page).to_not have_content answer.body
+          expect(page).to have_content 'edited answer'
+          #expect(page).to_not have_selector 'textarea'
+        end
       end
     end
 

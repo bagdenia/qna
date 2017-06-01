@@ -18,7 +18,6 @@ feature 'Question editing', %q{
       sign_in(user)
       sleep(2)
       visit questions_path
-      sleep(2)
     end
     scenario 'sees link to edit' do
       within '.qstn' do
@@ -28,16 +27,15 @@ feature 'Question editing', %q{
 
     scenario 'try to edit his question', js: true do
       click_on 'edit'
-      sleep(2)
-      within '.qstn' do
-        fill_in 'Title', with: 'edited question'
-        sleep(2)
-        click_on 'Save'
-        sleep(2)
-        #pry
-        expect(page).to_not have_content question.title
-        expect(page).to have_content 'edited question'
-        #expect(page).to_not have_selector 'textarea'
+      with_hidden_fields do
+        within '.qstn' do
+          fill_in 'Title', with: 'edited question'
+          click_on 'Save'
+          pry
+          expect(page).to_not have_content question.title
+          expect(page).to have_content 'edited question'
+          #expect(page).to_not have_selector 'textarea'
+        end
       end
     end
 
