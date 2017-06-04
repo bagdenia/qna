@@ -31,7 +31,6 @@ feature 'Answer editiong', %q{
         within '.answr' do
           click_on 'edit'
           fill_in 'Answer', with: 'edited answer'
-          pry
           click_on 'Save'
 
           expect(page).to_not have_content answer.body

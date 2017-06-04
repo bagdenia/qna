@@ -10,4 +10,11 @@ FactoryGirl.define do
     question
     user
   end
+
+  factory :best_answer, class: "Answer" do
+    body { Faker::Lorem.sentence }
+    question
+    user
+    best true
+  end
 end

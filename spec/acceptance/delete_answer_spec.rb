@@ -7,15 +7,15 @@ to delete my answer at question page
   given!(:user) { create(:user) }
   given!(:question) { create(:question, user: user) }
   given!(:answer) { create(:answer, user: user, question: question)}
-  scenario 'User can delete his answer' do
+  scenario 'User can delete his answer', js: true do
     sign_in(user)
-    visit question_path question
+    sleep(1)
     answer_body = answer.body
-
+    visit question_path question
     click_on 'delete'
-    expect(page).to have_content 'Answer successfully deleted'
-    expect(page).to have_no_content 'answer_body'
-
+    page.driver.browser.switch_to.alert.accept
+    sleep(1)
+    expect(page).to have_no_content answer_body
   end
 
   scenario 'User cant delete other user answer'do

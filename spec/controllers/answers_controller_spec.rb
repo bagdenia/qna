@@ -44,7 +44,7 @@ RSpec.describe AnswersController, type: :controller do
                                         user_id: user,
          answer: attributes_for(:answer), format: :js} }.to change(question.answers, :count).by(1)
       end
-      it 'redirects to show view' do
+      it 'render template create' do
         post :create, params: { question_id: question,
                                 user_id: user,
                                 answer: attributes_for(:answer), format: :js}
@@ -75,11 +75,11 @@ RSpec.describe AnswersController, type: :controller do
         sign_in user
       end
       it 'delete answer' do
-        expect { delete :destroy, params: { id: answer} }.to change(Answer, :count).by(-1)
+        expect { delete :destroy, params: { id: answer, format: :js} }.to change(Answer, :count).by(-1)
       end
-      it 'redirect to question' do
-        delete :destroy, params: { id: answer}
-        expect(response).to redirect_to question
+      it 'render template destroy' do
+        delete :destroy, params: { id: answer}, format: :js
+        expect(response).to render_template :destroy
       end
     end
 
@@ -90,11 +90,12 @@ RSpec.describe AnswersController, type: :controller do
         sign_in other_user
       end
       it 'dsnt delete answer' do
-        expect { delete :destroy, params: { id: answer} }.to_not change(Answer, :count)
+        expect { delete :destroy, params: { id: answer},format: :js }.to_not change(Answer, :count)
       end
-      it 'redirect to question' do
-        delete :destroy, params: { id: answer}
-        expect(response).to redirect_to question
+
+      it 'render template destroy' do
+        delete :destroy, params: { id: answer}, format: :js
+        expect(response).to render_template :destroy
       end
     end
   end
@@ -142,6 +143,43 @@ RSpec.describe AnswersController, type: :controller do
       end
 
     end
+  end
+
+  describe 'patch #set_best' do
+    before {user}
+    before {question}
+    before {answer}
+    context 'Questions author try to set_best' do
+      before do
+        @request.env['devise.mapping'] = Devise.mappings[user]
+        sign_in user
+        patch :set_best, params: {id: answer}, format: :js
+      end
+      it 'set best to true' do
+        answer.reload
+        expect(answer.best).to eq true
+      end
+      it 'render set_best template' do
+        expect(response).to render_template :set_best
+      end
+    end
+
+    context 'User try to set_best answer for other author question' do
+      before do
+        other_user = create(:user)
+        @request.env['devise.mapping'] = Devise.mappings[user]
+        sign_in other_user
+      end
+
+      it 'cant set best' do
+        expect { patch :set_best, params: { id: answer}, format: :js }.to_not change(answer, :best)
+      end
+      it 'render set_best template' do
+        patch :set_best, params: {id: answer}, format: :js
+        expect(response).to render_template :set_best
+      end
+    end
+
   end
 
 

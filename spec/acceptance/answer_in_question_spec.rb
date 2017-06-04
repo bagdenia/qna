@@ -8,7 +8,7 @@ to give my answer at question page
   given(:question) { create(:question, user: user) }
   scenario 'Authenticated user try to give answer to the question', js: true do
     sign_in(user)
-    sleep(2)
+    sleep(1)
     visit question_path question
 
     fill_in 'Your answer', with: 'My answer'
@@ -27,11 +27,10 @@ to give my answer at question page
   end
 
   scenario 'User try to create invalid answer', js: true do
-    sign_in user
+    sign_in(user)
+    sleep(1)
     visit question_path(question)
-
     click_on 'Create'
-    save_and_open_page
 
     expect(page).to have_content "Body can't be blank"
   end

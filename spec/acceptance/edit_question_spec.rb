@@ -31,7 +31,6 @@ feature 'Question editing', %q{
         within '.qstn' do
           fill_in 'Title', with: 'edited question'
           click_on 'Save'
-          pry
           expect(page).to_not have_content question.title
           expect(page).to have_content 'edited question'
           #expect(page).to_not have_selector 'textarea'

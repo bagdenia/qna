@@ -73,34 +73,6 @@ RSpec.describe QuestionsController, type: :controller do
     end
   end
 
-  describe 'PATCH #update' do
-    sign_in_user
-    context 'valid attrs' do
-      it 'assigns the requested question to @question' do
-        patch :update, params: { id: question, question: attributes_for(:question)}
-        expect(assigns(:question)).to eq question
-      end
-      it 'changes question attributes' do
-        patch :update, params: {id: question, question: {title: 'new title', body: 'new body'}}
-        question.reload
-        expect(question.title).to eq 'new title'
-        expect(question.body).to eq 'new body'
-      end
-    end
-    context 'invalid params' do
-      before{ patch :update, params: {id: question, question: {title: 'new title', body: nil}} }
-
-      it 'does not change question attributes' do
-        question.reload
-        expect(question.title).to eq 'My title'
-        expect(question.body).to eq 'My body'
-      end
-      it 're-render edit view' do
-        expect(response).to render_template :edit
-      end
-    end
-  end
-
   describe 'DELETE #destroy' do
     before {question}
     before {user}
@@ -144,33 +116,36 @@ RSpec.describe QuestionsController, type: :controller do
         sign_in user
       end
       it 'assigns the requested question to @question' do
-        patch :update, params: { id: answer, answer: attributes_for(:answer)}, format: :js
-        expect(assigns(:answer)).to eq answer
+        patch :update, params: { id: question, question: attributes_for(:question)}, format: :js
+        expect(assigns(:question)).to eq question
       end
 
-      it 'changes answers attributes' do
-        patch :update, params: {id: answer, answer: {body: 'new body'}}, format: :js
-        answer.reload
-        expect(answer.body).to eq 'new body'
+      it 'changes question attributes' do
+        patch :update, params: {id: question,
+                                question: {body: 'new body'}}, format: :js
+        question.reload
+        expect(question.body).to eq 'new body'
       end
 
       it 'render update template' do
-        patch :update, params: { id: answer, answer: attributes_for(:answer)}, format: :js
+        patch :update, params: { id: question, question: attributes_for(:question)}, format: :js
         expect(response).to render_template :update
       end
     end
 
-    context 'User cant edit other user answer' do
+    context 'User cant edit other user question' do
       before do
         other_user = create(:user)
         @request.env['devise.mapping'] = Devise.mappings[other_user]
         sign_in other_user
       end
-      it 'doesnt change answers attributes' do
-        patch :update, params: {id: answer, answer: {body: 'new body'}}, format: :js
+      it 'doesnt change question attributes' do
+        patch :update, params: {id: question, question: {title: 'new titile', body: 'new body'}}, format: :js
+        expect(question.title).to_not eq 'new title'
+        expect(question.body).to_not eq 'new body'
       end
       it 'redirect to question' do
-        patch :update, params: {id: answer, answer: {body: 'new body'}}, format: :js
+        patch :update, params: {id: question, question: {body: 'new body'}}, format: :js
         expect(response).to_not redirect_to question
       end
     end

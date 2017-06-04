@@ -37,7 +37,7 @@ class AnswersController < ApplicationController
 
   def set_best
     @question = @answer.question
-    if current_user.id == @answer.user_id
+    if current_user.id == @question.user_id
       @answer.set_best
     end
 

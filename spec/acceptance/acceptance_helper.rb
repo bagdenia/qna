@@ -5,7 +5,7 @@ RSpec.configure do |config|
   #Capybara.javascript_driver = :webkit
   #Capybara.javascript_driver = :poltergeist
   Capybara.server_host = "0.0.0.0"
-  Capybara.server_port = 3000
+  Capybara.server_port = 5000
   config.include AcceptanceHelper, type: :feature
 
 
