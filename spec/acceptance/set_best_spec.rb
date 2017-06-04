@@ -11,30 +11,30 @@ feature 'Set best answer', %q{
   describe 'Authenticated user' do
     before do
       sign_in(user)
-      sleep(1)
+      expect(page).to have_link 'Log out'
       visit question_path(question)
     end
     scenario 'can set best asnwer', js: true do
-      within "#answer-#{Answer.first.id}" do
+      within "#answer-#{answers.first.id}" do
         click_on 'Set best'
         expect(page).to have_content 'BEST'
       end
     end
     scenario 'can set another answer as best', js: true do
-      within "#answer-#{Answer.first.id}" do
+      within "#answer-#{answers.first.id}" do
         click_on 'Set best'
         expect(page).to have_content 'BEST'
       end
-      within "#answer-#{Answer.second.id}" do
+      within "#answer-#{answers.second.id}" do
         click_on 'Set best'
         expect(page).to have_content 'BEST'
       end
     end
     scenario 'see best answer first in answers list', js: true do
-      within "#answer-#{Answer.third.id}" do
+      within "#answer-#{answers.third.id}" do
         click_on 'Set best'
       end
-      sleep(1)
+      expect(page).to have_content 'Answers'
       best_tr = page.find('.answr').first(:xpath, 'tr[1]')
       within best_tr do
         expect(page).to have_content 'BEST'
@@ -53,10 +53,10 @@ feature 'Set best answer', %q{
   # scenario 'Everyone see best answer first in answers list', js: true do
   #   answers.first.set_best
   #   visit question_path(question)
-  #   sleep(1)
+  #   expect(page).to have_content 'Answers'
   #   best_tr = page.find('.answr').first(:xpath, 'tr[1]')
   #   within best_tr do
   #     expect(page).to have_content 'BEST'
   #   end
-  # end через сценарий выше прекрасно аналогичный тест отрабатывает, а тут не может css найти, не понимаю почему
+  # end
 end

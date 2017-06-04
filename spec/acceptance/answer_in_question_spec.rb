@@ -8,14 +8,12 @@ to give my answer at question page
   given(:question) { create(:question, user: user) }
   scenario 'Authenticated user try to give answer to the question', js: true do
     sign_in(user)
-    sleep(1)
+    expect(page).to have_link 'Log out'
     visit question_path question
 
     fill_in 'Your answer', with: 'My answer'
     click_on 'Create'
 
-
-    #expect(page).to have_content 'Your answer successfully created'
     within  '.answr' do
       expect(page).to have_content 'My answer'
     end
@@ -28,9 +26,10 @@ to give my answer at question page
 
   scenario 'User try to create invalid answer', js: true do
     sign_in(user)
-    sleep(1)
+    expect(page).to have_link 'Log out'
     visit question_path(question)
     click_on 'Create'
+    wait_for_ajax
 
     expect(page).to have_content "Body can't be blank"
   end

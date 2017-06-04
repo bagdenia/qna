@@ -17,7 +17,7 @@ feature 'Answer editiong', %q{
   describe 'Authenticated user' do
     before do
       sign_in(user)
-      sleep(1)
+      expect(page).to have_link 'Log out'
       visit question_path(question)
     end
     scenario 'sees link to edit' do
