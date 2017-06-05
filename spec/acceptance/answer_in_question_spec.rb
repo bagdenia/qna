@@ -8,7 +8,6 @@ to give my answer at question page
   given(:question) { create(:question, user: user) }
   scenario 'Authenticated user try to give answer to the question', js: true do
     sign_in(user)
-    expect(page).to have_link 'Log out'
     visit question_path question
 
     fill_in 'Your answer', with: 'My answer'
@@ -26,7 +25,6 @@ to give my answer at question page
 
   scenario 'User try to create invalid answer', js: true do
     sign_in(user)
-    expect(page).to have_link 'Log out'
     visit question_path(question)
     click_on 'Create'
     wait_for_ajax

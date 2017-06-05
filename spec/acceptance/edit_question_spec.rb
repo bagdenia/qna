@@ -16,7 +16,6 @@ feature 'Question editing', %q{
   describe 'Authenticated user' do
     before do
       sign_in(user)
-      sleep(2)
       visit questions_path
     end
     scenario 'sees link to edit' do

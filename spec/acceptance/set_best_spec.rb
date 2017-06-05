@@ -11,7 +11,6 @@ feature 'Set best answer', %q{
   describe 'Authenticated user' do
     before do
       sign_in(user)
-      expect(page).to have_link 'Log out'
       visit question_path(question)
     end
     scenario 'can set best asnwer', js: true do
