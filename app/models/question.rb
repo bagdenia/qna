@@ -5,4 +5,6 @@ class Question < ApplicationRecord
   default_scope { order(:id) }
 
   validates :title, :body, presence: true
+
+  accepts_nested_attributes_for :attachments
 end
