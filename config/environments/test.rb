@@ -23,7 +23,7 @@ Rails.application.configure do
   config.action_controller.perform_caching = false
 
   # Raise exceptions instead of rendering exception templates.
-  config.action_dispatch.show_exceptions = false
+  config.action_dispatch.show_exceptions = ENV['LOG'].present?
 
   # Disable request forgery protection in test environment.
   config.action_controller.allow_forgery_protection = false
@@ -36,6 +36,10 @@ Rails.application.configure do
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
+
+  config.log_level = :debug
+  config.logger = Logger.new(STDOUT) if ENV['LOG'].present?
+
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
