@@ -1,0 +1,7 @@
+          -item.attachments.each do |a|
+            div  id = "file-#{a.id}"
+              = link_to a.file.filename, a.file.url 
+              = ' '
+              -if (user_signed_in?) && (current_user.id == item.user_id)
+                =link_to 'delete', a, data: {confirm: 'Are you sure?'}, method: :delete, remote: true, class: 'delete_file'
+
