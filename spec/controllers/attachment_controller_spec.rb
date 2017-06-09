@@ -14,7 +14,7 @@ RSpec.describe AttachmentsController, type: :controller do
         sign_in user
       end
       it 'delete attachment' do
-        expect { delete :destroy, params: { id: attachment, format: :js} }.to change(Attachment, :count).by(-1)
+        expect { delete :destroy, params: { id: attachment, format: :js} }.to change(question.attachments, :count).by(-1)
       end
       it 'render template destroy' do
         delete :destroy, params: { id: attachment }, format: :js
@@ -29,7 +29,7 @@ RSpec.describe AttachmentsController, type: :controller do
         sign_in other_user
       end
       it 'dsnt delete attachment' do
-        expect { delete :destroy, params: { id: attachment},format: :js }.to_not change(Attachment, :count)
+        expect { delete :destroy, params: { id: attachment},format: :js }.to_not change(question.attachments, :count)
       end
 
       it 'render template destroy' do
