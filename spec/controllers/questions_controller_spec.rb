@@ -99,7 +99,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
 
-    context 'User cant  delete other user question' do
+    context 'User cant delete other user question' do
       before do
         other_user = create(:user)
         @request.env['devise.mapping'] = Devise.mappings[other_user]
