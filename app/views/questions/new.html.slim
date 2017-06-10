@@ -1,6 +1,18 @@
+.question_errors
+  -if @question.errors.any?
+    -@question.errors.full_messages.each do |message|
+      p
+        = message
 = form_for @question do |f|
-  = f.label :title
-  = f.text_field :title
-  = f.label :body
-  = f.text_area :body
+  p
+    = f.label :title
+    = f.text_field :title
+  p
+    = f.label :body
+    = f.text_area :body
+  p
+    = f.fields_for :attachments do |a|
+    = link_to_add_association 'add file', f, :attachments, partial: 'partials/add_file'
+
+
   = f.submit 'Create'

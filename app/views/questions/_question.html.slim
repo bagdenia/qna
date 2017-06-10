@@ -6,8 +6,11 @@ tr id = "question-#{question.id}"
         td =link_to 'edit', '', class: 'edit-question-link', data: { question_id: question.id }
         td 
           = form_for [question], remote: true, html: { id: "edit-question-#{question.id}"} do |f|
-            = f.label :title, 'Title'
-            = f.text_area :title
-            = f.label :body, 'Body'
-            = f.text_area :body
+            p
+              = f.label :title, 'Title'
+              = f.text_area :title
+            p
+              = f.label :body, 'Body'
+              = f.text_area :body
+            p Attachments:
             = f.submit 'Save'

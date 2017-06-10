@@ -18,6 +18,9 @@ gem 'sass-rails', '~> 5.0'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 gem 'devise'
+gem 'carrierwave'
+gem 'remotipart'
+gem "cocoon"
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -53,6 +56,7 @@ group :development, :test do
   gem 'factory_girl_rails'
   gem 'database_cleaner'
   gem 'pry-rails'
+  #gem 'pry-byebug'
   #gem 'capybara-webkit'
   gem 'selenium-webdriver'
   #gem 'poltergeist'

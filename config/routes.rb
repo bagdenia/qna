@@ -1,7 +1,9 @@
 Rails.application.routes.draw do
   devise_for :users
   resources :questions, shallow: true do
-    resources :answers do
+    resources :attachments
+    resources :answers , shallow: true do
+      resources :attachments
       patch :set_best, on: :member
     end
   end

@@ -22,6 +22,9 @@ RSpec.describe QuestionsController, type: :controller do
     it 'assigns the requested question to correspond @user' do
       expect(assigns(:question).user).to eq  user
     end
+    it 'bulids new attachment for answer' do
+      expect(assigns(:answer).attachments.first).to be_a_new(Attachment)
+    end
     it 'renders show view' do
       expect(response).to render_template :show
     end
@@ -34,6 +37,11 @@ RSpec.describe QuestionsController, type: :controller do
     it 'assigns a new Question to @question' do
       expect(assigns(:question)).to be_a_new(Question)
     end
+
+    it 'bulids new attachment for question' do
+      expect(assigns(:question).attachments.first).to be_a_new(Attachment)
+    end
+
     it 'renders new view' do
       expect(response).to render_template :new
     end
@@ -59,7 +67,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
       it 'redirects to show view' do
          post :create, params: { question: attributes_for(:question) }
-         expect(response).to redirect_to questions_path
+         expect(response).to redirect_to assigns(:question)
       end
     end
     context 'with invalid attributes' do
@@ -91,7 +99,7 @@ RSpec.describe QuestionsController, type: :controller do
       end
     end
 
-    context 'User cant  delete other user question' do
+    context 'User cant delete other user question' do
       before do
         other_user = create(:user)
         @request.env['devise.mapping'] = Devise.mappings[other_user]
