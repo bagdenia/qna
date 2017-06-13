@@ -1,7 +1,8 @@
 h2 = 'Questions:'
 .qstn
-  table
-    - @questions.each do |question|
+  div 
+  - @questions.each do |question|
+    p
       = render question
 
 

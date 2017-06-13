@@ -1,20 +1,31 @@
 doctype html
 html
   head
-    title Qna
     = csrf_meta_tags
 
 
     = javascript_include_tag :cocoon
     = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' 
     = javascript_include_tag 'application', 'data-turbolinks-track': 'reload' 
-  body
-    p.notice = notice 
-    p.alert = alert 
-    -if !user_signed_in?
-      table
-        tr 
-          td = link_to "Register", new_user_session_path
-    -else
-      = link_to "Log out", destroy_user_session_path, method: :delete
-    = yield
+body
+     .navbar.navbar-fixed-top
+       .navbar-inner
+         .container
+           a.btn.btn-navbar data-target=".nav-collapse" data-toggle="collapse"
+             span.icon-bar
+             span.icon-bar
+             span.icon-bar
+           /= link_to "QnA", root_path, class: 'brand'
+           .container.nav-collapse
+             ul.nav.navbar-nav
+              -if !user_signed_in?
+                li = link_to "Register", new_user_session_path
+              -else
+                li = link_to "Log out", destroy_user_session_path, method: :delete
+           .container
+             .main
+               .row
+                 .span9
+                   = bootstrap_flash
+                   = yield
+

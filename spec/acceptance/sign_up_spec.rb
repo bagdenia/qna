@@ -4,7 +4,7 @@ feature 'User sign up', %q{
   want to be able to sign up
 } do
 
-  scenario 'User can sign_up' do
+  scenario 'User can sign_up', js: true do
     visit new_user_registration_path
 
     fill_in 'Email', with: 'fafa@test.com'
