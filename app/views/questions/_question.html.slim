@@ -1,16 +1,18 @@
-tr id = "question-#{question.id}"
-      td = link_to question.title, question
-      td = '  ' 
-      -if (user_signed_in?) && (current_user.id == question.user_id)
-        td =link_to 'delete', question, data: {confirm: 'Are you sure?'}, method: :delete
-        td =link_to 'edit', '', class: 'edit-question-link', data: { question_id: question.id }
-        td 
-          = form_for [question], remote: true, html: { id: "edit-question-#{question.id}"} do |f|
-            p
-              = f.label :title, 'Title'
-              = f.text_area :title
-            p
-              = f.label :body, 'Body'
-              = f.text_area :body
-            p Attachments:
-            = f.submit 'Save'
+.row id = "question-#{question.id}"
+  .row
+    .col-md-4 = link_to question.title, question
+    -if (user_signed_in?) && (current_user.id == question.user_id)
+      .col-md-1.small =link_to 'delete', question, data: {confirm: 'Are you sure?'}, method: :delete
+      .col-md-1.small =link_to 'edit', '', class: 'edit-question-link', data: { question_id: question.id }
+    .col-md-4 = render 'partials/show_files', item: question
+  .row
+    -if (user_signed_in?) && (current_user.id == question.user_id)
+      = form_for [question], remote: true, html: { id: "edit-question-#{question.id}"} do |f|
+        .col-md-4 
+          = f.label :title, 'Title'
+          = f.text_area :title
+        .col-md-4 
+          = f.label :body, 'Body'
+          = f.text_area :body
+          = f.submit 'Save'
+
