@@ -1,0 +1,9 @@
+.col-md-1
+  .col-md-1
+    - if @object.voted 
+      a.glyphicon.glyphicon-remove data-method="delete" data-remote="true" data-type="json" href= @object.unvote_path rel="nofollow" 
+    -else
+      a.glyphicon.glyphicon-thumbs-up data-method="post" href= @object.vote_up_path rel="nofollow" 
+      a.glyphicon.glyphicon-thumbs-down data-method="post" href= @object.vote_down_path rel="nofollow"
+  .col-md-1
+    .rating @object.rating

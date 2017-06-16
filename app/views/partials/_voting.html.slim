@@ -1,0 +1,12 @@
+/div id = "vote-#{item.class.name}-#{item.id}"
+.col-md-1
+  -if user_signed_in?
+    -if current_user.voted_this(item)
+      = link_to '', current_user.find_vote(item), method: :delete, remote: true, data: {type: :json}, class: 'glyphicon glyphicon-remove'
+    -else
+      = link_to '', votes_path(vote: {votable_id: item.id, votable_type: item.class.name, elect: true}), method: :post, remote: true, data: {type: :json}, class: 'glyphicon glyphicon-thumbs-up'
+      = link_to '', votes_path(vote: {votable_id: item.id, votable_type: item.class.name, elect: false}), method: :post, remote: true, data: {type: :json}, class: 'glyphicon glyphicon-thumbs-down'
+
+.col-md-1
+  .rating
+    = item.rating
