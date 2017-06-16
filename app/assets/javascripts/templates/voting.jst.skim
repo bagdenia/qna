@@ -6,4 +6,5 @@
       a.glyphicon.glyphicon-thumbs-up data-method="post" href= @object.vote_up_path rel="nofollow" 
       a.glyphicon.glyphicon-thumbs-down data-method="post" href= @object.vote_down_path rel="nofollow"
   .col-md-1
-    .rating @object.rating
+    .rating 
+      = @object.rating

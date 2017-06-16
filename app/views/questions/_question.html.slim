@@ -1,5 +1,7 @@
 .row id = "question-#{question.id}"
   .row
+    .votes
+      .col-md-1 = render 'partials/voting', item: question
     .col-md-4 = link_to question.title, question
     -if (user_signed_in?) && (current_user.id == question.user_id)
       .col-md-1.small =link_to 'delete', question, data: {confirm: 'Are you sure?'}, method: :delete

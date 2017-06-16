@@ -10,8 +10,9 @@ class VotesController < ApplicationController
         @votable.reload
         format.html { redirect_to(request.env['HTTP_REFERER']) }
         format.json { render :vote}
-        # format.json { render json: @votable }
       else
+        format.html { render text: @vote.errors.full_messages.join("\n"), status: :unprocessable_entity }
+        format.json { render json: @vote.errors.full_messages, status: :unprocessable_entity }
 
       end
     end
@@ -25,8 +26,9 @@ class VotesController < ApplicationController
           @votable.reload
           format.html { redirect_to(request.env['HTTP_REFERER']) }
           format.json { render :vote}
-          # format.json { render json: @votable }
         else
+          format.html { render text: @vote.errors.full_messages.join("\n"), status: :unprocessable_entity }
+          format.json { render json: @vote.errors.full_messages, status: :unprocessable_entity }
         end
       end
      end
