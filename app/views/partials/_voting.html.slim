@@ -2,10 +2,13 @@
 .col-md-1
   -if user_signed_in?
     -if current_user.voted_this(item)
-      = link_to '', current_user.find_vote(item), method: :delete, remote: true, data: {type: :json}, class: 'glyphicon glyphicon-remove'
+      = link_to '', current_user.find_vote(item), method: :delete, remote: true, 
+        data: {type: :json}, class: 'glyphicon glyphicon-remove', id: "unvote"
     -else
-      = link_to '', votes_path(vote: {votable_id: item.id, votable_type: item.class.name, elect: true}), method: :post, remote: true, data: {type: :json}, class: 'glyphicon glyphicon-thumbs-up'
-      = link_to '', votes_path(vote: {votable_id: item.id, votable_type: item.class.name, elect: false}), method: :post, remote: true, data: {type: :json}, class: 'glyphicon glyphicon-thumbs-down'
+      = link_to '', votes_path(vote: {votable_id: item.id, votable_type: item.class.name, elect: true}), 
+      method: :post, remote: true, data: {type: :json}, class: 'glyphicon glyphicon-thumbs-up', id: "vote_up"
+      = link_to '', votes_path(vote: {votable_id: item.id, votable_type: item.class.name, elect: false}), 
+        method: :post, remote: true, data: {type: :json}, class: 'glyphicon glyphicon-thumbs-down', id: "vote_down"
 
 .col-md-1
   .rating
