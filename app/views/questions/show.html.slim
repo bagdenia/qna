@@ -15,7 +15,7 @@ br
 -if user_signed_in?
   =form_for [@question, @answer], remote: true do |f|
     = f.label :body, 'Your answer'
-    .answer-errors
+    .errors
     = f.text_area :body
     p
       = f.fields_for :attachments do |a|

@@ -23,8 +23,8 @@ class Vote < ApplicationRecord
     end
 
     def self_vote_denied
-      if votable.user_id == user_id
-        errors.add(:user, 'You cant vote for his ' + votable_type)
+      if votable && votable.user_id == user_id
+        errors.add(:user, 'cant vote for his ' + votable_type)
       end
     end
 
