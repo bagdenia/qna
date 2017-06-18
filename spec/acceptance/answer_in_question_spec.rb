@@ -5,7 +5,7 @@ I want to be able
 to give my answer at question page
 } do
   given(:user) { create(:user) }
-  given(:question) { create(:question, user: user) }
+  given!(:question) { create(:question, user: user) }
   scenario 'Authenticated user try to give answer to the question', js: true do
     sign_in(user)
     visit question_path question
@@ -18,7 +18,7 @@ to give my answer at question page
     end
   end
 
-  scenario 'Non-authenticated user try to give answer to the question' do
+  scenario 'Non-authenticated user try to give answer to the question', js: true do
     visit question_path question
     expect(page).to have_no_content 'Your answer'
   end

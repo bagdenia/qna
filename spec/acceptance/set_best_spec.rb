@@ -16,17 +16,17 @@ feature 'Set best answer', %q{
     scenario 'can set best asnwer', js: true do
       within "#answer-#{answers.first.id}" do
         click_on 'Set best'
-        expect(page).to have_content 'BEST'
+        expect(page).to have_css '.glyphicon-star-empty'
       end
     end
     scenario 'can set another answer as best', js: true do
       within "#answer-#{answers.first.id}" do
         click_on 'Set best'
-        expect(page).to have_content 'BEST'
+        expect(page).to have_css '.glyphicon-star-empty'
       end
       within "#answer-#{answers.second.id}" do
         click_on 'Set best'
-        expect(page).to have_content 'BEST'
+        expect(page).to have_css '.glyphicon-star-empty'
       end
     end
     scenario 'see best answer first in answers list', js: true do
@@ -34,9 +34,9 @@ feature 'Set best answer', %q{
         click_on 'Set best'
       end
       expect(page).to have_content 'Answers'
-      best_tr = page.find('.answr').first(:xpath, 'tr[1]')
+      best_tr = page.find("div#answer-#{answers.third.id}")
       within best_tr do
-        expect(page).to have_content 'BEST'
+        expect(page).to have_css '.glyphicon-star-empty'
       end
     end
 
@@ -49,13 +49,13 @@ feature 'Set best answer', %q{
     expect(page).to have_no_button'Set best'
   end
 
-  # scenario 'Everyone see best answer first in answers list', js: true do
-  #   answers.first.set_best
-  #   visit question_path(question)
-  #   expect(page).to have_content 'Answers'
-  #   best_tr = page.find('.answr').first(:xpath, 'tr[1]')
-  #   within best_tr do
-  #     expect(page).to have_content 'BEST'
-  #   end
-  # end
+  scenario 'Everyone see best answer first in answers list', js: true do
+    answers.first.set_best
+    visit question_path(question)
+    expect(page).to have_content 'Answers'
+    best_tr = page.find("div#answer-#{answers.first.id}")
+    within best_tr do
+      expect(page).to have_css '.glyphicon-star-empty'
+    end
+  end
 end
