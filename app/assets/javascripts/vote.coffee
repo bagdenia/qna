@@ -7,7 +7,6 @@ editOn = ->
     element = "div#" + item.class
     $("#{element}-#{item.id} .votes").html(JST["templates/voting"]({object: item}))
     $(".errors").html("")
-    # $('.qstn').append(element)
    .bind 'ajax:error', (e, xhr, status, error) ->
      errors = $.parseJSON(xhr.responseText)
      $.each errors, (index, value) ->

@@ -13,7 +13,7 @@ class Vote < ApplicationRecord
   private
 
     def update_votable_rating
-      klass = Class.const_get(votable_type)
+      klass = votable_type.constantize
       if (elect==1) == new_record?
         klass.increment_counter(:rating, votable_id)
       else
