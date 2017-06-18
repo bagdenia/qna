@@ -5,7 +5,7 @@ class VotesController < ApplicationController
   respond_to :json
 
   def create
-    @votable = Class.const_get(vote_params[:votable_type]).find(vote_params[:votable_id])
+    @votable = vote_params[:votable_type].constantize.find(vote_params[:votable_id])
     if @votable.user_id != current_user.id
       @vote = @votable.votes.build(vote_params.merge(user: current_user))
       if @vote.save
@@ -18,7 +18,7 @@ class VotesController < ApplicationController
   end
 
   def destroy
-    @votable = Class.const_get(@vote.votable_type).find(@vote.votable_id)
+    @votable = @vote.votable_type.constantize.find(@vote.votable_id)
     if current_user.id  == @vote.user_id
       if @vote.destroy
         @votable.reload
