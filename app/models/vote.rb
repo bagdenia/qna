@@ -20,10 +20,4 @@ class Vote < ApplicationRecord
         klass.decrement_counter(:rating, votable_id)
       end
     end
-
-
-
-
-
-
 end
