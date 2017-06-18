@@ -1,0 +1,15 @@
+/div id = "vote-#{item.class.name}-#{item.id}"
+.col-md-1
+  -if user_signed_in? && item.user_id != current_user.id
+    -if item.voted_by(current_user)
+      = link_to '', item.find_vote(current_user), method: :delete, remote: true, 
+        data: {type: :json}, class: 'glyphicon glyphicon-remove', id: "unvote"
+    -else
+      = link_to '', votes_path(vote: {votable_id: item.id, votable_type: item.class.name, elect: 1 }), 
+      method: :post, remote: true, data: {type: :json}, class: 'glyphicon glyphicon-thumbs-up', id: "vote_up"
+      = link_to '', votes_path(vote: {votable_id: item.id, votable_type: item.class.name, elect: -1 }), 
+        method: :post, remote: true, data: {type: :json}, class: 'glyphicon glyphicon-thumbs-down', id: "vote_down"
+
+.col-md-1
+  .rating
+    = item.rating

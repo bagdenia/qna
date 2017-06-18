@@ -9,7 +9,7 @@ feature 'Show question and it-s answer', %q{
   given(:question) { create(:question) }
   given!(:answers) { create_list(:answer, 2, question: question) }
   #background { create_list(:question, 2) }
-  scenario 'Authenticated user browses questions list' do
+  scenario 'Authenticated user browses questions list', js: true do
     sign_in(user)
 
     visit question_path(question)
@@ -18,7 +18,7 @@ feature 'Show question and it-s answer', %q{
     expect(page).to have_content question.answers.second.body
   end
 
-  scenario 'Non-authenticated user browses questions list' do
+  scenario 'Non-authenticated user browses questions list', js: true do
     visit question_path(question)
     expect(page).to have_content question.title
     expect(page).to have_content question.answers.first.body

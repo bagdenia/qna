@@ -1,11 +1,12 @@
 h2 = 'Questions:'
 .qstn
-  table
-    - @questions.each do |question|
+  div 
+  - @questions.each do |question|
+    p
       = render question
 
 
 
-.answer-errors
+.errors
 -if user_signed_in?
   p =link_to 'Ask question', new_question_path

@@ -6,7 +6,7 @@ feature 'Create question', %q{
   I want to be able to ask questions
 } do
   given(:user) { create(:user) }
-  scenario 'Authenticated user creates question' do
+  scenario 'Authenticated user creates question', js: true do
     sign_in(user)
 
     visit questions_path
@@ -19,7 +19,7 @@ feature 'Create question', %q{
     expect(page).to have_content 'Test question'
   end
 
-  scenario 'Non-authenticated user tries to create question' do
+  scenario 'Non-authenticated user tries to create question', js: true do
     visit questions_path
 
     expect(page).to have_no_content 'Ask question'

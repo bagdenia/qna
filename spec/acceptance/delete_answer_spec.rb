@@ -16,7 +16,7 @@ to delete my answer at question page
     expect(page).to have_no_content answer_body
   end
 
-  scenario 'User cant delete other user answer'do
+  scenario 'User cant delete other user answer', js: true do
     other_user = create(:user)
     sign_in(other_user)
     visit question_path question
