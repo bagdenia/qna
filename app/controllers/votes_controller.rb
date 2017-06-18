@@ -2,18 +2,17 @@ class VotesController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :load_vote, only: :destroy
 
+  respond_to :json
+
   def create
     @votable = Class.const_get(vote_params[:votable_type]).find(vote_params[:votable_id])
-    @vote = @votable.votes.build(vote_params.merge(user: current_user))
-    respond_to do |format|
+    if @votable.user_id != current_user.id
+      @vote = @votable.votes.build(vote_params.merge(user: current_user))
       if @vote.save
         @votable.reload
-        format.html { redirect_to(request.env['HTTP_REFERER']) }
-        format.json { render :vote}
+        render :vote
       else
-        format.html { render text: @vote.errors.full_messages.join("\n"), status: :unprocessable_entity }
-        format.json { render json: @vote.errors.full_messages, status: :unprocessable_entity }
-
+        render json: @vote.errors.full_messages, status: :unprocessable_entity
       end
     end
   end
@@ -21,15 +20,11 @@ class VotesController < ApplicationController
   def destroy
     @votable = Class.const_get(@vote.votable_type).find(@vote.votable_id)
     if current_user.id  == @vote.user_id
-      respond_to do |format|
-        if @vote.destroy
-          @votable.reload
-          format.html { redirect_to(request.env['HTTP_REFERER']) }
-          format.json { render :vote}
-        else
-          format.html { render text: @vote.errors.full_messages.join("\n"), status: :unprocessable_entity }
-          format.json { render json: @vote.errors.full_messages, status: :unprocessable_entity }
-        end
+      if @vote.destroy
+        @votable.reload
+        render :vote
+      else
+        render json: @vote.errors.full_messages, status: :unprocessable_entity
       end
      end
   end

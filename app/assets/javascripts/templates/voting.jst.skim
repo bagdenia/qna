@@ -3,8 +3,8 @@
     - if @object.voted 
       a.glyphicon.glyphicon-remove data-method="delete" id="unvote" data-remote="true" data-type="json" href= @object.unvote_path rel="nofollow" 
     -else
-      a.glyphicon.glyphicon-thumbs-up id="vote_up" data-method="post" href= @object.vote_up_path rel="nofollow" 
-      a.glyphicon.glyphicon-thumbs-down id="vote_down" data-method="post" href= @object.vote_down_path rel="nofollow"
+      a.glyphicon.glyphicon-thumbs-up data-method="post" id="vote_up" data-remote="true" data-type="json" href= @object.vote_up_path rel="nofollow" 
+      a.glyphicon.glyphicon-thumbs-down  data-method="post" id="vote_down" data-remote="true" data-type="json" href= @object.vote_down_path rel="nofollow"
   .col-md-1
     .rating 
       = @object.rating

@@ -4,8 +4,7 @@ class Vote < ApplicationRecord
 
   validates :user, :votable, :votable_type, presence: true
   validates :user_id, uniqueness: { scope: [:votable_id, :votable_type] }
-  validates :elect, inclusion: [false, true]
-  validate :self_vote_denied
+  validates :elect, inclusion: [1, -1]
 
   before_create :update_votable_rating
   before_destroy :update_votable_rating
@@ -15,16 +14,10 @@ class Vote < ApplicationRecord
 
     def update_votable_rating
       klass = Class.const_get(votable_type)
-      if elect? == new_record?
+      if (elect==1) == new_record?
         klass.increment_counter(:rating, votable_id)
       else
         klass.decrement_counter(:rating, votable_id)
-      end
-    end
-
-    def self_vote_denied
-      if votable && votable.user_id == user_id
-        errors.add(:user, 'cant vote for his ' + votable_type)
       end
     end
 
