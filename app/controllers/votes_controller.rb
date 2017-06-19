@@ -1,7 +1,7 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :load_vote, only: :destroy
-  before_action :load_votable
+  before_action :load_votable, only: :create
 
   respond_to :json
 
@@ -18,7 +18,8 @@ class VotesController < ApplicationController
   end
 
   def destroy
-    @votable = @vote.votable_type.constantize.find(@vote.votable_id)
+    # binding.pry
+    @votable = @vote.votable_type.classify.constantize.find(@vote.votable_id)
     if current_user.id  == @vote.user_id
       if @vote.destroy
         @votable.reload
@@ -38,11 +39,17 @@ class VotesController < ApplicationController
     def load_vote
       @vote = Vote.find(params[:id])
     end
+
     def load_votable
-      if params[:question_id]
-        @votable = Question.find(params[:question_id])
-      elsif params[:answer_id]
-        @votable = Answer.find(params[:answer_id])
-      end
+      # binding.pry
+      @votable = votable_name.classify.constantize.find(params[votable_id])
+    end
+
+    def votable_name
+      params[:votable]
+    end
+
+    def votable_id
+      votable_name.singularize+"_id"
     end
 end
