@@ -1,11 +1,11 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :load_vote, only: :destroy
+  before_action :load_votable
 
   respond_to :json
 
   def create
-    @votable = vote_params[:votable_type].constantize.find(vote_params[:votable_id])
     if @votable.user_id != current_user.id
       @vote = @votable.votes.build(vote_params.merge(user: current_user))
       if @vote.save
@@ -32,10 +32,17 @@ class VotesController < ApplicationController
   private
 
     def vote_params
-      params.require(:vote).permit(:id, :elect, :votable_id, :votable_type);
+      params.require(:vote).permit(:id, :elect);
     end
 
     def load_vote
       @vote = Vote.find(params[:id])
+    end
+    def load_votable
+      if params[:question_id]
+        @votable = Question.find(params[:question_id])
+      elsif params[:answer_id]
+        @votable = Answer.find(params[:answer_id])
+      end
     end
 end
