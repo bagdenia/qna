@@ -4,7 +4,7 @@ module Votable
   included do
     has_many :votes, as: :votable, dependent: :destroy
   end
-  def voted_by(user)
+  def voted_by?(user)
     votes.where(user: user).exists?
   end
 
