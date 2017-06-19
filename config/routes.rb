@@ -4,10 +4,10 @@ Rails.application.routes.draw do
   # resources :votes, only: [:create, :destroy]
 
   resources :questions, shallow: true do
-    resources :votes, only: [:create, :destroy]#, defaults: {votable: 'Questions'}
+    resources :votes, only: [:create, :destroy], defaults: {votable: 'questions'}
     resources :attachments
     resources :answers, shallow: true do
-      resources :votes, only: [:create, :destroy]#, defaults: {votable: 'Answers'}
+      resources :votes, only: [:create, :destroy], defaults: {votable: 'answers'}
       resources :attachments
       patch :set_best, on: :member
     end
