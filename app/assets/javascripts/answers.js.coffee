@@ -8,7 +8,6 @@ editOn = ->
     $(this).hide();
     answer_id = $(this).data('answerId')
     $('form#edit-answer-' + answer_id).show()
-    $('.answr').append(JST["templates/test"]({world: "World"}))
 
 ready = ->
   editOn()

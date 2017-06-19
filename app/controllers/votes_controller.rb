@@ -18,8 +18,7 @@ class VotesController < ApplicationController
   end
 
   def destroy
-    # binding.pry
-    @votable = @vote.votable_type.classify.constantize.find(@vote.votable_id)
+    @votable = @vote.votable
     if current_user.id  == @vote.user_id
       if @vote.destroy
         @votable.reload
@@ -41,7 +40,6 @@ class VotesController < ApplicationController
     end
 
     def load_votable
-      # binding.pry
       @votable = votable_name.classify.constantize.find(params[votable_id])
     end
 
