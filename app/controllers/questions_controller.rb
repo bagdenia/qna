@@ -1,6 +1,7 @@
 class QuestionsController < ApplicationController
   before_action :authenticate_user!, except: [:index, :show]
   before_action :load_question, only: [:show, :edit, :update, :destroy]
+  after_action :publish_question, only: :create
 
   def index
     @questions = Question.all
@@ -48,6 +49,15 @@ class QuestionsController < ApplicationController
 
 
   private
+
+  def publish_question
+    return if @question.errors.any?
+    ActionCable.server.broadcast 'questions',
+      ApplicationController.render(
+        partial: 'questions/question_ac',
+        locals: {question: @question}
+      )
+  end
 
   def load_question
     @question = Question.find(params[:id])
