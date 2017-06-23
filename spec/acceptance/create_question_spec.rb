@@ -43,7 +43,6 @@ feature 'Create question', %q{
         expect(page).to have_content 'Test question'
       end
       Capybara.using_session('guest') do
-        expect(page).to have_content 'Ask question'
         expect(page).to have_content 'Test question'
       end
 
