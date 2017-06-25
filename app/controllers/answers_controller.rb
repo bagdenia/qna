@@ -2,6 +2,7 @@ class AnswersController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :load_question, only: [:create, :new]
   before_action :load_answer, only: [:show, :edit, :update, :destroy, :set_best]
+  after_action :publish_answer, only: :create
 
 
   def show
@@ -19,7 +20,6 @@ class AnswersController < ApplicationController
       @answer = Answer.find(params[:id])
       @answer.update(answer_params)
     end
-    @question = @answer.question
   end
 
 
@@ -29,7 +29,6 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    @question = @answer.question
     if current_user.id == @answer.user_id
       @answer.destroy
     end
@@ -49,6 +48,15 @@ class AnswersController < ApplicationController
 
 
   private
+
+  def publish_answer
+    return if @answer.errors.any?
+    ActionCable.server.broadcast "questions/#{params[:question_id]}",
+      ApplicationController.render(
+        partial: 'answers/answer_channel',
+        locals: {answer: @answer}
+      )
+  end
 
   def load_answer
     @answer = Answer.find(params[:id])

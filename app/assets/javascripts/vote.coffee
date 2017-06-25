@@ -2,7 +2,8 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
 editOn = ->
-  $('.votes').bind 'ajax:success', (e, data, status, xhr) ->
+  $('.answr').bind 'ajax:success', (e, data, status, xhr) ->
+    # $(".answr").html(JST["templates/test"]({world: "Shishkabumm!!"}))
     item = $.parseJSON(xhr.responseText)
     element = "div#" + item.class
     $("#{element}-#{item.id} .votes").html(JST["templates/voting"]({object: item}))

@@ -9,6 +9,16 @@ editOn = ->
     answer_id = $(this).data('answerId')
     $('form#edit-answer-' + answer_id).show()
 
+  App.cable.subscriptions.create('AnswersChannel', {
+    connected: ->
+      return unless gon.question_id
+      @perform 'follow', id: gon.question_id
+    ,
+    received: (data) ->
+      answer = $.parseJSON(data)
+      return if gon.current_user_id == answer.user_id
+      $("#table-answers").append(JST["templates/answer"]({object: answer}))
+  })
 ready = ->
   editOn()
 
