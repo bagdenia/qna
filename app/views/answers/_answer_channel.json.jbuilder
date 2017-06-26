@@ -1,4 +1,4 @@
-json.extract! answer, :id, :body, :question, :user_id, :rating, :best
+json.extract! answer, :id, :body, :question_id, :user_id, :rating, :best
 json.question_user_id answer.question.user_id
 json.vote_up_path polymorphic_path([answer, :votes ], vote: { elect: 1})
 json.vote_down_path polymorphic_path([answer, :votes ], vote: { elect: -1})

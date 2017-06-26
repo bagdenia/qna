@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
   def show
     @answer = @question.answers.build
     @answer.attachments.build
+    gon.question_id = params[:id]
   end
 
   def new
@@ -61,9 +62,8 @@ class QuestionsController < ApplicationController
 
   def load_question
     @question = Question.find(params[:id])
-    gon.question_id = params[:id]
-    gon.user_signed_in = user_signed_in?
-    gon.current_user_id = current_user.id if current_user
+    # gon.user_signed_in = user_signed_in?
+    # gon.current_user_id = current_user.id if current_user
   end
 
   def question_params
