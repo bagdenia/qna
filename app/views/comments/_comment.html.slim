@@ -1,0 +1,4 @@
+  .row.h6 id = "comment-#{comment.id}" 
+    -if comment.persisted?
+      .col-md-1
+      .col-md-3 = comment.body

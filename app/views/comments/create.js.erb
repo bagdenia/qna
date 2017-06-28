@@ -1,0 +1,11 @@
+<% if @comment.errors.present? %>
+  <% @comment.errors.full_messages.each do |message| %>
+    $('.errors').html('<%= j message %>')
+  <% end %>
+<% else %>
+  $("#<%= @comment.commentable_type.downcase + @comment.commentable_id.to_s %>_comments").append('<%= j render @comment %>');
+  $(".new_comment").hide()
+  $(".new-comment-link").show()
+
+  $('#comment_body').val('');
+<% end %>

@@ -1,0 +1,6 @@
+-if user_signed_in?
+  =form_for [commentable, Comment.new], remote: true, html: {id: "#{commentable.class.name.downcase}#{commentable.id}-new-comment"} do |f|
+    = f.label :body, 'Your comment'
+    .errors
+    = f.text_area :body
+    = f.submit 'Create'
