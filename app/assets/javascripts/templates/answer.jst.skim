@@ -5,8 +5,8 @@
       .col-md-1
         .col-md-1
           -if gon.user_signed_in && @object.user_id != gon.current_user_id
-            a.glyphicon.glyphicon-thumbs-up data-method="post" id="vote_up" data-remote="true" data-type="json" href= @object.vote_up_path rel="nofollow" 
-            a.glyphicon.glyphicon-thumbs-down  data-method="post" id="vote_down" data-remote="true" data-type="json" href= @object.vote_down_path rel="nofollow"
+            a.glyphicon.glyphicon-thumbs-up data-method="post" id="vote_up" data-remote="true" data-type="json" href="/answers/#{@object.id}/votes?vote%5Belect%5D=1" rel="nofollow" 
+            a.glyphicon.glyphicon-thumbs-down  data-method="post" id="vote_down" data-remote="true" data-type="json" href="/answers/#{@object.id}/votes?vote%5Belect%5D=-1" rel="nofollow"
         .col-md-1
           .rating #{@object.rating}
     .col-md-3 #{@object.body}
@@ -15,12 +15,12 @@
         .glyphicon.glyphicon-star-empty
     .col-md-1.small
       -if gon.user_signed_in && @object.question_user_id == gon.current_user_id
-        form.button_to action= @object.set_best_path data-remote="true" method="post" 
+        form.button_to action= "/answers/#{@object.id}/set_best" data-remote="true" method="post" 
           input name="_method" type="hidden" value="patch"
           input.btn.btn-primary.btn-xs type="submit" value=("Set best")
     .col-md-1.small
       -if gon.user_signed_in && @object.user_id == gon.current_user_id
-        a.delete_answer data-confirm=("Are you sure?") data-method="delete" data-remote="true" href=@object.answer_path rel="nofollow"  delete
+        a.delete_answer data-confirm=("Are you sure?") data-method="delete" data-remote="true" href= "/answers/#{@object.id}" rel="nofollow"  delete
     .col-md-1.small
       -if gon.user_signed_in && @object.user_id == gon.current_user_id
         a.edit-answer-link data-answer-id=@object.id href=""  edit
@@ -31,10 +31,25 @@
             a href=attach.file_url #{attach.file_name}
   .row
       -if gon.user_signed_in && @object.user_id == gon.current_user_id
-        form.edit_answer id="edit-answer-#{@object.id}" accept-charset="UTF-8" action=@object.answer_path data-remote="true" method="post" 
+        form.edit_answer id="edit-answer-#{@object.id}" accept-charset="UTF-8" action= "/answers/#{@object.id}" data-remote="true" method="post" 
           input name="utf8" type="hidden" value="✓"
           input name="_method" type="hidden" value="patch"
           label for="answer_body"  Answer
           textarea#answer_body name="answer[body]" #{@object.body}
           input data-disable-with="Save" name="commit" type="submit" value="Save"
+  .row
+    .col-md-2
+      a.show-comments-link data-votable-id="#{@object.id}" data-votable-type="answer" href=""  Show comments
+    .col-md-2
+      -if gon.user_signed_in
+        a.new-comment-link data-votable-id="#{@object.id}" data-votable-type="answer" href="" style=("display: inline;")  New comment
+  .comments id = "answer#{@object.id}_comments"
+    h5 Comments:
+  -if gon.user_signed_in
+    form.new_comment id="answer#{@object.id}-new-comment" accept-charset="UTF-8" action="/answers/#{@object.id}/comments" data-remote="true" method="post" style=("display: none;")
+      input name="utf8" type="hidden" value="✓" 
+      label for="comment_body"  Your comment
+      .errors
+      textarea#comment_body name="comment[body]" 
+      input data-disable-with="Create" name="commit" type="submit" value="Create" 
  

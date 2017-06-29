@@ -1,7 +1,6 @@
 # Place all the behaviors and hooks related to the matching controller here.
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://coffeescript.org/
-
 editOn = ->
   $(document).on 'click', '.edit-answer-link', (e) ->
     e.preventDefault();
@@ -35,11 +34,11 @@ answerOn = ->
 
       received: (data) ->
         answer = $.parseJSON(data)
-        console.log('Received gon  User id: ', gon.current_user_id)
-        console.log('Received answer User id: ', answer.user_id)
-        console.log('Received Answer id: ', answer.id)
-        console.log('Received Question id: ', answer.question_id)
-        console.log('Received Gon question id: ', gon.question_id)
+        # console.log('Received gon  User id: ', gon.current_user_id)
+        # console.log('Received answer User id: ', answer.user_id)
+        # console.log('Received Answer id: ', answer.id)
+        # console.log('Received Question id: ', answer.question_id)
+        # console.log('Received Gon question id: ', gon.question_id)
         return if gon.current_user_id == answer.user_id
         $("#table-answers").append(JST["templates/answer"]({object: answer}))
 
@@ -50,3 +49,5 @@ answerOn = ->
     })
 
 $(document).on('turbolinks:load', answerOn)
+$(document).on('page:load', answerOn)
+$(document).on('page:update', answerOn)

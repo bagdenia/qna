@@ -14,9 +14,9 @@ ready = ->
       @perform 'follow'
     ,
     received: (data) ->
-      $(".qstn").append data
+      question = $.parseJSON(data)
+      return if gon.current_user_id == question.user_id
+      $('.qstn').append(JST["templates/question"]({object: question}))
   })
 
 $(document).on('turbolinks:load', ready)
-$(document).on('page:load', ready)
-$(document).on('page:update', ready)

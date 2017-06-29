@@ -24,7 +24,8 @@
           .col-md-2
             = link_to 'Show comments', '', class: 'show-comments-link', data: { votable_type: 'answer', votable_id: answer.id } 
           .col-md-2
-            = link_to 'New comment', '', class: 'new-comment-link', data: { votable_type: 'answer', votable_id: answer.id } 
+            -if user_signed_in?
+              = link_to 'New comment', '', class: 'new-comment-link', data: { votable_type: 'answer', votable_id: answer.id } 
         .comments id = "answer#{answer.id}_comments"
           h5 = 'Comments:'
           = render answer.comments

@@ -18,7 +18,7 @@ RSpec.describe Vote, type: :model do
     let(:other_user) { create(:user) }
     let(:question) { create(:question, user: other_user) }
     let!(:vote) { create(:vote, user: user, votable_type: "Question",
-                         votable: question, elect: false) }
+                         votable: question, elect: -1) }
     it 'Changes votable rating' do
       question.reload
       expect(question.rating).to eq -1

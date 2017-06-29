@@ -1,0 +1,3 @@
+.row.h6 id="comment-#{@object.id}"
+  .col-md-1
+  .col-md-3 #{@object.body}

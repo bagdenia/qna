@@ -1,0 +1,23 @@
+.row id="question-#{@object.id}"
+  .row
+    .votes
+      .col-md-1
+        .col-md-1
+          -if gon.user_signed_in && @object.user_id != gon.current_user_id
+            a.glyphicon.glyphicon-thumbs-up data-method="post" id="vote_up" data-remote="true" data-type="json" href="/questions/#{@object.id}/votes?vote%5Belect%5D=1" rel="nofollow" 
+            a.glyphicon.glyphicon-thumbs-down  data-method="post" id="vote_down" data-remote="true" data-type="json" href="/questions/#{@object.id}/votes?vote%5Belect%5D=-1" rel="nofollow" 
+        .col-md-1
+          .rating #{@object.rating}
+    .col-md-4
+      a href="/questions/#{@object.id}" #{@object.title}
+    .col-md-1.small
+      -if gon.user_signed_in && @object.user_id == gon.current_user_id
+        a data-confirm=("Are you sure?") data-method="delete" href="/questions/#{@object.id}" rel="nofollow"  delete
+    .col-md-1.small
+      -if gon.user_signed_in && @object.user_id == gon.current_user_id
+        a.edit-question-link data-question-id="#{@object.id}" href=""  edit
+    .col-md-4
+      -if @object.attachments.length > 0
+        -for attach in @object.attachments
+          div id="file-#{attach.id}"
+            a href=attach.file_url #{attach.file_name}

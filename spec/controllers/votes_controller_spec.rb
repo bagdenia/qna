@@ -4,21 +4,28 @@ RSpec.describe VotesController, type: :controller do
   let(:other_user) { create(:user) }
   let(:another_user) { create(:user) }
   let(:question) { create(:question, user: user)}
-  let(:vote) {build(:vote, user: user, votable: question,
-                    votable_type: 'Question', elect: true)}
+  let(:vote) {build(:vote, user_id: user, votable: 'questions',
+                    elect: 1, question_id: question.id)}
   let!(:vote_to_destroy) {create(:vote, user: other_user, votable: question,
-                    votable_type: 'Question', elect: true)}
+                    votable_type: 'Question', elect: 1)}
   describe 'POST #create' do
     sign_in_user
       it 'saves new vote to db' do
-        expect{ post :create, params: {vote: vote.attributes}, format: :json }.to change(question.votes, :count).by(1)
+        expect { post :create, params:{ votable: 'questions',
+                                        user_id: user, question_id: question, elect: 1,
+         vote: attributes_for(:vote), format: :json} }.to change(question.votes, :count).by(1)
+
       end
       it 'render template vote' do
-        post :create, params: {vote: vote.attributes}, format: :json
+        post :create, params:{ votable: 'questions',
+                                                user_id: user, question_id: question, elect: 1,
+                 vote: attributes_for(:vote), format: :json}
         expect(response).to render_template :vote
       end
       it 'changes question rating' do
-        expect{ post :create, params: {vote: vote.attributes}, format: :json }.to change {question.reload.rating}.by(1)
+        expect { post :create, params:{ votable: 'questions',
+                                        user_id: user, question_id: question, elect: 1,
+         vote: attributes_for(:vote), format: :json} }.to change {question.reload.rating}.by(1)
 
       end
   end

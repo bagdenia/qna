@@ -45,3 +45,44 @@ ready = ->
 $(document).on('turbolinks:load', ready)
 $(document).on('page:load', ready)
 $(document).on('page:update', ready)
+
+commentOn = ->
+    App.comments = App.cable.subscriptions.create('CommentsChannel', {
+      connected: ->
+        setTimeout =>
+          @installedPageChangeCallback = false
+          @followCurrentComment()
+          @installPageChangeCallback()
+        , 1000
+
+      followCurrentComment: ->
+        console.log('Connected Gon.question_id: ', gon.question_id)
+        console.log('Connected User id: ', gon.current_user_id)
+        return unless gon.question_id
+        @perform 'follow', id: gon.question_id
+
+      disconnected: ->
+
+      received: (data) ->
+        comment = $.parseJSON(data)
+        # console.log('Received gon  User id: ', gon.current_user_id)
+        # console.log('Received comment User id: ', comment.user_id)
+        # console.log('Received comment id: ', comment.id)
+        # # console.log('Received Question id: ', comment.question_id)
+        # console.log('Received Gon question id: ', gon.question_id)
+        commentable_type = comment.commentable_type
+        commentable_id = comment.commentable_id
+        # console.log('Received comment commentable_type: ', commentable_type + commentable_id)
+        # console.log('Received comment commentable_id: ', commentable_id)
+        # console.log('Received comment body: ', comment.body)
+        return if gon.current_user_id == comment.user_id
+        comment_class = comment.commentable_type+ comment.commentable_id + '_comments'
+        $('#'+comment_class).append(JST["templates/comment"]({object: comment}))
+
+      installPageChangeCallback: ->
+        unless @installedPageChangeCallback
+          @installedPageChangeCallback = true
+          $(document).on 'turbolinks:load', -> App.comments.followCurrentComment()
+    })
+
+$(document).on('turbolinks:load', commentOn)

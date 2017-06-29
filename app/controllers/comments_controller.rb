@@ -2,21 +2,29 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :load_comment, only: [:show]
   before_action :load_commentable, only: :create
+  after_action :publish_comment, only: :create
 
   # respond_to :json
 
   def create
-    @comment= Comment.create(comment_params.merge(user_id: current_user.id))
-    @comment= @commentable.comments.build(comment_params.merge(user: current_user))
-    if @comment.save
-      # @commentable.reload
-    else
-      # render json: @comment.errors.full_messages, status: :unprocessable_entity
-    end
+    @comment= @commentable.comments.create(comment_params.merge(user: current_user))
   end
 
 
   private
+    def publish_comment
+      return if @comment.errors.any?
+      if params['question_id'].present?
+        question_id = params['question_id']
+      else
+        question_id = @comment.commentable.question_id
+      end
+      ActionCable.server.broadcast "questions/#{question_id}/comments",
+        ApplicationController.render(
+          partial: 'comments/comment_channel',
+          locals: {comment: @comment}
+        )
+    end
 
     def comment_params
       params.require(:comment).permit(:id, :body);

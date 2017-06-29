@@ -5,11 +5,12 @@ p Attachments:
 ul
   = render 'partials/show_files', item: @question
 
-.row
+.row.show-comments-question
   .col-md-2
     = link_to 'Show comments', '', class: 'show-comments-link', data: { votable_type: 'question', votable_id: @question.id } 
   .col-md-2
-    = link_to 'New comment', '', class: 'new-comment-link', data: { votable_type: 'question', votable_id: @question.id } 
+    - if user_signed_in?
+      = link_to 'New comment', '', class: 'new-comment-link', data: { votable_type: 'question', votable_id: @question.id } 
 .comments id = "question#{@question.id}_comments"
   h5 = 'Comments:'
   = render @question.comments
