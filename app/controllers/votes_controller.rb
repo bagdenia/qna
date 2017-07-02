@@ -10,7 +10,7 @@ class VotesController < ApplicationController
       @vote = @votable.votes.build(vote_params.merge(user: current_user))
       if @vote.save
         @votable.reload
-        render :vote
+        render :vote  #тут не меняла на respond_with, потому как не сам инстанс в json возвращаем
       else
         render json: @vote.errors.full_messages, status: :unprocessable_entity
       end
@@ -18,7 +18,6 @@ class VotesController < ApplicationController
   end
 
   def destroy
-    @votable = @vote.votable
     if current_user.id  == @vote.user_id
       if @vote.destroy
         @votable.reload
@@ -37,6 +36,7 @@ class VotesController < ApplicationController
 
     def load_vote
       @vote = Vote.find(params[:id])
+      @votable = @vote.votable
     end
 
     def load_votable

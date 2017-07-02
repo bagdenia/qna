@@ -4,40 +4,32 @@ class AnswersController < ApplicationController
   before_action :load_answer, only: [:show, :edit, :update, :destroy, :set_best]
   after_action :publish_answer, only: :create
 
+  respond_to :js
 
-  def show
-  end
 
-  def edit
-  end
-
-  def new
-     @answer = @question.answers.new
-  end
 
   def update
     if current_user.id == @answer.user_id
-      @answer = Answer.find(params[:id])
       @answer.update(answer_params)
+      respond_with @answer
     end
   end
 
 
 
   def create
-    @answer = @question.answers.create(answer_params.merge(user_id: current_user.id))
+    respond_with(@answer = @question.answers.create(answer_params.merge(user_id: current_user.id)))
   end
 
   def destroy
     if current_user.id == @answer.user_id
-      @answer.destroy
+      respond_with(@answer.destroy)
     end
   end
 
   def set_best
-    @question = @answer.question
     if current_user.id == @question.user_id
-      @answer.set_best
+      respond_with(@answer.set_best)
     end
 
   end
@@ -60,6 +52,7 @@ class AnswersController < ApplicationController
 
   def load_answer
     @answer = Answer.find(params[:id])
+    @question = @answer.question
   end
 
   def load_question

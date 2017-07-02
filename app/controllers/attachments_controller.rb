@@ -1,13 +1,14 @@
 class AttachmentsController < ApplicationController
   before_action :authenticate_user!
   before_action :load_file
+  respond_to :js
 
   def show
   end
 
   def destroy
     if current_user.id == @attachment.attachmentable.user_id
-      @attachment.destroy
+      respond_with(@attachment.destroy)
     end
   end
 

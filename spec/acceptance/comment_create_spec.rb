@@ -64,7 +64,6 @@ to  leave my comment at question page
         expect(page).to have_content 'My comment'
       end
       Capybara.using_session('guest') do
-        pry
         within '.show-comments-question' do
           click_on 'Show comments'
         end
