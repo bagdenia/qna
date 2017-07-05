@@ -15,6 +15,8 @@ gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.7'
 gem 'gon'
 gem 'responders'
+gem 'omniauth'
+gem 'omniauth-facebook'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'twitter-bootstrap-rails'
