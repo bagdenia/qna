@@ -5,6 +5,7 @@ require File.expand_path('../../config/environment', __FILE__)
 # Prevent database truncation if the environment is production
 abort("The Rails environment is running in production mode!") if Rails.env.production?
 require 'rspec/rails'
+require 'capybara/email/rspec'
 #require 'shoulda/matchers'
 # Add additional requires below this line. Rails is not loaded until this point!
 
@@ -34,6 +35,7 @@ RSpec.configure do |config|
   config.include Devise::TestHelpers, type: :controller
   config.extend ControllerMacros, type: :controller
   config.include AcceptanceHelper, type: :feature
+  config.include OmniauthMacros
 
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
@@ -63,6 +65,7 @@ RSpec.configure do |config|
   config.order = "random"
 
 end
+OmniAuth.config.test_mode = true
 
 Shoulda::Matchers.configure do |config|
   config.integrate do |with|

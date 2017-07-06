@@ -22,6 +22,8 @@ Rails.application.configure do
   config.consider_all_requests_local       = true
   config.action_controller.perform_caching = false
 
+  config.action_mailer.delivery_method = :letter_opener
+
   # Raise exceptions instead of rendering exception templates.
   config.action_dispatch.show_exceptions = ENV['LOG'].present?
 
@@ -34,6 +36,7 @@ Rails.application.configure do
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
+  config.action_mailer.default_url_options = { host: '0.0.0.0:5000' }
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr

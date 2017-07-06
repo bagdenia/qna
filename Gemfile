@@ -17,6 +17,7 @@ gem 'gon'
 gem 'responders'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'omniauth-vkontakte'
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'
 gem 'twitter-bootstrap-rails'
@@ -50,6 +51,7 @@ gem 'rails-controller-testing'
 group :test do
  gem 'shoulda-matchers', git: 'https://github.com/thoughtbot/shoulda-matchers.git', branch: 'rails-5'
  gem 'capybara'
+ gem 'capybara-email'
  gem 'launchy'
  gem 'faker'
 end
@@ -65,6 +67,7 @@ group :development, :test do
   #gem 'pry-byebug'
   #gem 'capybara-webkit'
   gem 'selenium-webdriver'
+  gem "letter_opener"
   #gem 'poltergeist'
 end
 
