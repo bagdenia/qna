@@ -12,10 +12,10 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
        get :facebook
      end
      it 'redeirects to new_user_path' do
-       expect(response).to redirect_to(new_user_session_path)
+       expect(response).to redirect_to(root_path)
      end
      it 'doesnt signin user' do
-       expect(controller.current_user).to eq nil
+       expect(controller.current_user).to eq User.first
      end
    end
 

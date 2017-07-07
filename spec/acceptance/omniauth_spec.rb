@@ -11,14 +11,14 @@ feature 'Authenticate with OmniAuth', %q{
       expect(page).to have_content('Sign in with Facebook')
       mock_auth_hash(:facebook)
       click_on 'Sign in with Facebook'
-      expect(page).to have_content('You have to confirm your email address before continuing')
-      message = ActionMailer::Base.deliveries.last.body.raw_source
-      doc = Nokogiri::HTML.parse(message)
-      url = doc.css("a").map { |link| link[:href] }.first
-      visit url
-      expect(page).to have_content('Your email address has been successfully confirmed')
-      click_on 'Sign in with Facebook'
       expect(page).to have_content('Successfully authenticated from facebook account')
+      # message = ActionMailer::Base.deliveries.last.body.raw_source
+      # doc = Nokogiri::HTML.parse(message)
+      # url = doc.css("a").map { |link| link[:href] }.first
+      # visit url
+      # expect(page).to have_content('Your email address has been successfully confirmed')
+      # click_on 'Sign in with Facebook'
+      # expect(page).to have_content('Successfully authenticated from facebook account')
     end
 
     scenario "Existing user first time try to login using FB", js: true do
@@ -58,14 +58,14 @@ feature 'Authenticate with OmniAuth', %q{
       expect(page).to have_content('Email')
       fill_in 'auth_info_email', with: "bagdenia@mail.ru"
       click_on 'Submit'
-      expect(page).to have_content('You have to confirm your email address before continuing')
-      message = ActionMailer::Base.deliveries.last.body.raw_source
-      doc = Nokogiri::HTML.parse(message)
-      url = doc.css("a").map { |link| link[:href] }.first
-      visit url
-      expect(page).to have_content('Your email address has been successfully confirmed')
-      click_on 'Sign in with Vkontakte'
       expect(page).to have_content('Successfully authenticated from vkontakte account')
+      # message = ActionMailer::Base.deliveries.last.body.raw_source
+      # doc = Nokogiri::HTML.parse(message)
+      # url = doc.css("a").map { |link| link[:href] }.first
+      # visit url
+      # expect(page).to have_content('Your email address has been successfully confirmed')
+      # click_on 'Sign in with Vkontakte'
+      # expect(page).to have_content('Successfully authenticated from vkontakte account')
     end
 
     scenario "Existing user first time try to login using VK", js: true do
