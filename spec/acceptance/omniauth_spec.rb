@@ -17,7 +17,6 @@ feature 'Authenticate with OmniAuth', %q{
     scenario "Existing user first time try to login using FB", js: true do
       auth = mock_auth_hash(:facebook)
       user.update!(email: auth.info.email)
-      user.update!(confirmed_at: DateTime.now)
       visit new_user_session_path
       expect(page).to have_content('Sign in with Facebook')
       click_on 'Sign in with Facebook'
@@ -34,7 +33,6 @@ feature 'Authenticate with OmniAuth', %q{
     scenario "Existing authorized FB user try again to login using FB", js: true do
       auth = mock_auth_hash(:facebook)
       user.update!(email: auth.info.email)
-      user.update!(confirmed_at: DateTime.now)
       authorization = create(:authorization, user: user, provider: auth.provider, uid: auth.uid)
       visit new_user_session_path
       click_on 'Sign in with Facebook'
@@ -57,7 +55,6 @@ feature 'Authenticate with OmniAuth', %q{
     scenario "Existing user first time try to login using VK", js: true do
       auth = mock_auth_hash(:vkontakte)
       user.update!(email: 'vk@mail.ru')
-      user.update!(confirmed_at: DateTime.now)
       visit new_user_session_path
       expect(page).to have_content('Sign in with Vkontakte')
       click_on 'Sign in with Vkontakte'
@@ -77,7 +74,6 @@ feature 'Authenticate with OmniAuth', %q{
     scenario "Existing authorized VK user try again to login using VK", js: true do
       auth = mock_auth_hash(:vkontakte)
       user.update!(email: 'vk@mail.ru')
-      user.update!(confirmed_at: DateTime.now)
       authorization = create(:authorization, user: user, provider: auth.provider, uid: auth.uid)
       visit new_user_session_path
       click_on 'Sign in with Vkontakte'

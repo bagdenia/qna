@@ -22,8 +22,6 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
    context 'with existing facebook user' do
      before do
       auth = mock_auth_hash(:facebook)
-      user.update!(email: auth.info.email)
-      user.update!(confirmed_at: DateTime.now)
       authorization = create(:authorization, user: user, provider: auth.provider, uid: auth.uid)
       get :facebook
      end
@@ -56,7 +54,6 @@ RSpec.describe OmniauthCallbacksController, type: :controller do
    context 'with existing VK user' do
      before do
       auth = mock_auth_hash(:vkontakte)
-      user.update!(confirmed_at: DateTime.now)
       authorization = create(:authorization, user: user, provider: auth.provider, uid: auth.uid)
       get :vkontakte
      end
