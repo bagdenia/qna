@@ -7,5 +7,5 @@ h2 = 'Questions:'
 
 
 .errors
--if user_signed_in?
+-if can?(:create, Question)
   p =link_to 'Ask question', new_question_path

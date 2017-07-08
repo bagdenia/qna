@@ -10,13 +10,13 @@
                 .glyphicon.glyphicon-star-empty
 
             .col-md-1.small 
-              -if (user_signed_in?) && (current_user.id == answer.question.user_id)
+              -if can?(:set_best, answer)
                 = button_to 'Set best', set_best_answer_path(answer), method: :patch, remote: true, class: 'btn btn-primary btn-xs'
             .col-md-1.small
-              -if (user_signed_in?) && (current_user.id == answer.user_id)
+              -if can?(:destroy, answer)
                 =link_to 'delete', answer, data: {confirm: 'Are you sure?'}, method: :delete, remote: true, class: 'delete_answer'
             .col-md-1.small 
-              -if (user_signed_in?) && (current_user.id == answer.user_id)
+              -if can?(:update, answer)
                 =link_to 'edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
             .col-md-4  = render 'partials/show_files', item: answer
 
@@ -24,7 +24,7 @@
           .col-md-2
             = link_to 'Show comments', '', class: 'show-comments-link', data: { votable_type: 'answer', votable_id: answer.id } 
           .col-md-2
-            -if user_signed_in?
+            -if can?(:create, Comment)
               = link_to 'New comment', '', class: 'new-comment-link', data: { votable_type: 'answer', votable_id: answer.id } 
         .comments id = "answer#{answer.id}_comments"
           h5 = 'Comments:'
@@ -33,7 +33,7 @@
         
         = render 'comments/new_comment', commentable: answer
         .row
-          -if (user_signed_in?) && (current_user.id == answer.user_id)
+          -if can?(:update, answer)
             = form_for [answer], remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
               = f.label :body, 'Answer'
               = f.text_area :body

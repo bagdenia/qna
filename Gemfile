@@ -28,6 +28,7 @@ gem 'carrierwave'
 gem 'remotipart'
 gem "cocoon"
 gem 'skim'
+gem 'cancancan'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 

@@ -1,31 +1,26 @@
 class VotesController < ApplicationController
   before_action :authenticate_user!, except: [:show]
   before_action :load_vote, only: :destroy
-  before_action :load_votable, only: :create
-
+  before_action :load_votable_and_vote, only: :create
+  authorize_resource
   respond_to :json
 
   def create
-    if @votable.user_id != current_user.id
-      @vote = @votable.votes.build(vote_params.merge(user: current_user))
-      if @vote.save
-        @votable.reload
-        render :vote  #тут не меняла на respond_with, потому как не сам инстанс в json возвращаем
-      else
-        render json: @vote.errors.full_messages, status: :unprocessable_entity
-      end
+    if @vote.save
+      @votable.reload
+      render :vote  #тут не меняла на respond_with, потому как не сам инстанс в json возвращаем
+    else
+      render json: @vote.errors.full_messages, status: :unprocessable_entity
     end
   end
 
   def destroy
-    if current_user.id  == @vote.user_id
-      if @vote.destroy
-        @votable.reload
-        render :vote
-      else
-        render json: @vote.errors.full_messages, status: :unprocessable_entity
-      end
-     end
+    if @vote.destroy
+      @votable.reload
+      render :vote
+    else
+      render json: @vote.errors.full_messages, status: :unprocessable_entity
+    end
   end
 
   private
@@ -39,8 +34,9 @@ class VotesController < ApplicationController
       @votable = @vote.votable
     end
 
-    def load_votable
+    def load_votable_and_vote
       @votable = votable_name.classify.constantize.find(params[votable_id])
+      @vote = @votable.votes.build(vote_params.merge(user: current_user))
     end
 
     def votable_name

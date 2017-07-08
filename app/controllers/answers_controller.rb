@@ -3,16 +3,14 @@ class AnswersController < ApplicationController
   before_action :load_question, only: [:create, :new]
   before_action :load_answer, only: [:show, :edit, :update, :destroy, :set_best]
   after_action :publish_answer, only: :create
-
   respond_to :js
+  authorize_resource
 
 
 
   def update
-    if current_user.id == @answer.user_id
-      @answer.update(answer_params)
-      respond_with @answer
-    end
+    @answer.update(answer_params)
+    respond_with @answer
   end
 
 
@@ -22,16 +20,11 @@ class AnswersController < ApplicationController
   end
 
   def destroy
-    if current_user.id == @answer.user_id
-      respond_with(@answer.destroy)
-    end
+    respond_with(@answer.destroy)
   end
 
   def set_best
-    if current_user.id == @question.user_id
       respond_with(@answer.set_best)
-    end
-
   end
 
 

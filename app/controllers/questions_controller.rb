@@ -4,6 +4,7 @@ class QuestionsController < ApplicationController
   before_action :build_answer, only: :show
   after_action :publish_question, only: :create
   respond_to :js
+  authorize_resource
 
   def index
     respond_with(@questions = Question.all)
@@ -15,6 +16,7 @@ class QuestionsController < ApplicationController
   end
 
   def new
+    authorize! :create, Question
     respond_with(@question = Question.new)
   end
 
@@ -23,16 +25,12 @@ class QuestionsController < ApplicationController
   end
 
   def update
-    if current_user.id == @question.user_id
-      @question.update(question_params)
-      respond_with(@question)
-    end
+    @question.update(question_params)
+    respond_with(@question)
   end
 
   def destroy
-    if current_user.id == @question.user_id
-      respond_with(@question.destroy)
-    end
+    respond_with(@question.destroy)
   end
 
 

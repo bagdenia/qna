@@ -81,7 +81,7 @@ RSpec.describe AnswersController, type: :controller do
 
       it 'render template destroy' do
         delete :destroy, params: { id: answer}, format: :js
-        expect(response).to render_template :destroy
+        expect(response).to redirect_to root_url
       end
     end
   end
@@ -162,7 +162,7 @@ RSpec.describe AnswersController, type: :controller do
       end
       it 'render set_best template' do
         patch :set_best, params: {id: answer}, format: :js
-        expect(response).to render_template :set_best
+        expect(response).to redirect_to root_url
       end
     end
 

@@ -4,14 +4,14 @@
       .col-md-1 = render 'partials/voting', item: question
     .col-md-4 = link_to question.title, question
     .col-md-1.small 
-      -if (user_signed_in?) && (current_user.id == question.user_id)
+      -if can?(:destroy, question)
         =link_to 'delete', question, data: {confirm: 'Are you sure?'}, method: :delete
     .col-md-1.small 
-      -if (user_signed_in?) && (current_user.id == question.user_id)
+      -if can?(:update, question)
         =link_to 'edit', '', class: 'edit-question-link', data: { question_id: question.id }
     .col-md-4 = render 'partials/show_files', item: question
   .row
-    -if (user_signed_in?) && (current_user.id == question.user_id)
+    -if can?(:update, question)
       = form_for [question], remote: true, html: { id: "edit-question-#{question.id}"} do |f|
         .col-md-4 
           = f.label :title, 'Title'

@@ -9,7 +9,7 @@ ul
   .col-md-2
     = link_to 'Show comments', '', class: 'show-comments-link', data: { votable_type: 'question', votable_id: @question.id } 
   .col-md-2
-    - if user_signed_in?
+    - if can?(:create, Comment)
       = link_to 'New comment', '', class: 'new-comment-link', data: { votable_type: 'question', votable_id: @question.id } 
 .comments id = "question#{@question.id}_comments"
   h5 = 'Comments:'
@@ -23,7 +23,7 @@ h2 = 'Answers:'
     = render @question.answers 
 
 
--if user_signed_in?
+-if can?(:create, Answer)
   =form_for [@question, @answer], remote: true do |f|
     = f.label :body, 'Your answer'
     .errors
