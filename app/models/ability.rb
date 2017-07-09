@@ -24,17 +24,17 @@ class Ability
     guest_abilities
     can :create, [Question, Answer, Comment, Attachment]
     can :create, Vote do |vote|
-      vote.votable.user != user
+      vote.votable.user_id != user.id
     end
-    can :update, [Question,Answer], user: user
+    can :update, [Question,Answer], user_id: user.id
     can :set_best, Answer do |answer|
-      answer.question.user == user
+      answer.question.user_id == user.id
     end
-    can :destroy, [Question, Answer], user: user
+    can :destroy, [Question, Answer], user_id: user.id
     can :destroy, Attachment do |att|
-      att.attachmentable.user == user
+      att.attachmentable.user_id == user.id
     end
-    can :destroy, Vote, user: user
+    can :destroy, Vote, user_id: user.id
   end
 
 

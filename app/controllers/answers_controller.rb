@@ -24,7 +24,7 @@ class AnswersController < ApplicationController
   end
 
   def set_best
-      respond_with(@answer.set_best)
+    respond_with(@answer.set_best)
   end
 
 
