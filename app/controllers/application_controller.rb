@@ -8,9 +8,9 @@ class ApplicationController < ActionController::Base
   before_action :gon_user, unless: :devise_controller?
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
-      format.json { render json: [exception.message] , :status => 500 }
-      format.html { redirect_to root_url, :alert => exception.message }
-      format.js   { render 'partials/exception', locals: {item: exception.message} }
+      format.json { render json: [exception.message] , status: 500}
+      format.html { redirect_to root_url, :alert => exception.message, status: 500}
+      format.js   { render 'partials/exception', locals: {item: exception.message}, status: 500}
     end
   end
   check_authorization unless: :devise_controller?

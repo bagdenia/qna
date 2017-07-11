@@ -29,6 +29,7 @@ gem 'remotipart'
 gem "cocoon"
 gem 'skim'
 gem 'cancancan'
+gem 'doorkeeper'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 
@@ -55,6 +56,7 @@ group :test do
  gem 'capybara-email'
  gem 'launchy'
  gem 'faker'
+ gem 'json_spec'
 end
 
 group :development, :test do
