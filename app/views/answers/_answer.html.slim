@@ -13,7 +13,7 @@
               -if can?(:set_best, answer)
                 = button_to 'Set best', set_best_answer_path(answer), method: :patch, remote: true, class: 'btn btn-primary btn-xs'
             .col-md-1.small
-              -if can?(:destroy, answer)
+                /-if can?(:destroy, answer)
                 =link_to 'delete', answer, data: {confirm: 'Are you sure?'}, method: :delete, remote: true, class: 'delete_answer'
             .col-md-1.small 
               -if can?(:update, answer)

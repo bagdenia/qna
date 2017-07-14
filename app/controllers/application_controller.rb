@@ -3,14 +3,13 @@ require "application_responder"
 class ApplicationController < ActionController::Base
   self.responder = ApplicationResponder
   respond_to :html
-
   protect_from_forgery with: :exception
   before_action :gon_user, unless: :devise_controller?
   rescue_from CanCan::AccessDenied do |exception|
     respond_to do |format|
-      format.json { render json: [exception.message] , status: 500}
-      format.html { redirect_to root_url, :alert => exception.message, status: 500}
-      format.js   { render 'partials/exception', locals: {item: exception.message}, status: 500}
+      format.json { render json: [exception.message] , status: 403}
+      format.html { redirect_to root_url, :alert => exception.message, status: 403}
+      format.js   { render 'partials/exception', locals: {item: exception.message}, status: 403}
     end
   end
   check_authorization unless: :devise_controller?
