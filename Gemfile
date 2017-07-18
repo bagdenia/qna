@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 ruby '2.3.1'
 
 git_source(:github) do |repo_name|
@@ -30,6 +30,9 @@ gem "cocoon"
 gem 'skim'
 gem 'cancancan'
 gem 'doorkeeper'
+gem 'active_model_serializers'
+gem 'oj'
+gem 'oj_mimic_json'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 

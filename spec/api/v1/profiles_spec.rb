@@ -67,17 +67,13 @@ describe 'Profile API' do
 
       %w(id email created_at updated_at admin).each do |attr|
         it "contains #{attr}" do
-          not_me.first do |usr| #работает с first и second но почему-то не работает с each
-            expect(response.body).to be_json_eql(usr.send(attr.to_sym).to_json).at_path(attr)
-          end
+          expect(response.body).to be_json_eql(not_me.first.send(attr.to_sym).to_json).at_path("0/#{attr}")
         end
       end
 
       %w(password encrypted_password).each do |attr|
         it "does not contain #{attr}" do
-          not_me.first do |usr|
-            expect(response.body).to_not have_json_path(attr).at_path(attr)
-          end
+          expect(response.body).to_not have_json_path(attr)
         end
       end
     end

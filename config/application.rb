@@ -28,5 +28,6 @@ module Qna
                       controller_spec: true
       g.fixtures_replacement :factory_girl, dir: 'spec/factories'
     end
+    config.paths.add "app/serializers/concerns", eager_load: true
   end
 end
