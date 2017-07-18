@@ -15,8 +15,6 @@ class Ability
   def guest_abilities
     can :read, :all
     cannot :manage, :profile
-    cannot :manage, :question
-    cannot :manage, :answer
   end
 
   def admin_abilities
@@ -26,9 +24,7 @@ class Ability
   def user_abilities
     guest_abilities
     can :create, [Question, Answer, Comment, Attachment]
-    can :manage, :profile
-    can :manage, :question
-    can :manage, :answer
+    can :profile, User, id: user.id
     can :create, Vote do |vote|
       vote.votable.user_id != user.id
     end

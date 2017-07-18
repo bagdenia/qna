@@ -1,4 +1,4 @@
-module AttachmentableSer
+module AttachmentableSerializer
   extend ActiveSupport::Concern
   included do
     has_many :attachments
