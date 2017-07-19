@@ -11,8 +11,8 @@ class QuestionsController < ApplicationController
   end
 
   def show
+    gon.question_id = @question.id
     respond_with(@question)
-    gon.question_id = params[:id]
   end
 
   def new

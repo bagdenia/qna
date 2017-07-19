@@ -21,7 +21,7 @@ answerOn = ->
         setTimeout =>
           @installedPageChangeCallback = false
           @followCurrentAnswer()
-          @installPageChangeCallback()
+          # @installPageChangeCallback()
         , 1000
 
       followCurrentAnswer: ->
@@ -44,5 +44,4 @@ answerOn = ->
     })
 
 $(document).on('turbolinks:load', answerOn)
-$(document).on('page:load', answerOn)
-$(document).on('page:update', answerOn)
+# $(document).ready(answerOn)
