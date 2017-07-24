@@ -33,4 +33,16 @@ RSpec.describe Answer, type: :model do
       end
     end
   end
+
+  describe 'inform_subscribers' do
+    it 'called on answer create' do
+      new_answer = build(:answer)
+      expect(new_answer).to receive(:inform_subscribers)
+      new_answer.save
+    end
+    it 'call NewAnswerJob' do
+      expect(NewAnswerJob).to receive(:perform_later).with(answer)
+      answer.inform_subscribers
+    end
+  end
 end

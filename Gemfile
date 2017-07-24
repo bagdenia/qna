@@ -1,4 +1,4 @@
-source 'http://rubygems.org'
+source 'https://rubygems.org'
 ruby '2.3.1'
 
 git_source(:github) do |repo_name|
@@ -33,6 +33,10 @@ gem 'doorkeeper'
 gem 'active_model_serializers'
 gem 'oj'
 gem 'oj_mimic_json'
+gem 'sidekiq'
+gem 'whenever'
+gem 'sinatra', '>= 1.3.0', require: nil
+# gem 'sidetiq'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
 

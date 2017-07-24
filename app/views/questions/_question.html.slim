@@ -10,6 +10,8 @@
       -if can?(:update, question)
         =link_to 'edit', '', class: 'edit-question-link', data: { question_id: question.id }
     .col-md-4 = render 'partials/show_files', item: question
+    .col-md-4 = render 'subscriptions/subscription', item: question
+
   .row
     -if can?(:update, question)
       = form_for [question], remote: true, html: { id: "edit-question-#{question.id}"} do |f|

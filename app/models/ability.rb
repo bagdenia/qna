@@ -28,6 +28,9 @@ class Ability
     can :create, Vote do |vote|
       vote.votable.user_id != user.id
     end
+    can :create, Subscription do |subscription|
+      !subscription.question.subscribed_by?(user)
+    end
     can :update, [Question,Answer], user_id: user.id
     can :set_best, Answer do |answer|
       answer.question.user_id == user.id
@@ -37,6 +40,7 @@ class Ability
       att.attachmentable.user_id == user.id
     end
     can :destroy, Vote, user_id: user.id
+    can :destroy, Subscription, user_id: user.id
   end
 
 

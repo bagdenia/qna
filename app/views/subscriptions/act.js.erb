@@ -1,0 +1,8 @@
+<% if @subscription.errors.present? %>
+  <% @subscription.errors.full_messages.each do |message| %>
+    $('.errors').html('<%= j message %>')
+  <% end %>
+<% else %>
+    $("#question-<%= @subscription.question.id%> .subscription").replaceWith('<%= j render 'subscriptions/subscription',
+                                                 item: @subscription.question %>')
+<% end %>
