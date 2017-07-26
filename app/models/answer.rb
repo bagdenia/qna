@@ -10,6 +10,8 @@ class Answer < ApplicationRecord
 
   validates :body, :question_id, presence: true
   after_create :inform_subscribers
+  # scope :subscribed, lambda {joins(question: :subscriptions).group("answers.id").
+  #                            having('COUNT(subscriptions) > 0').order("answers.id").limit(100)}
 
   def set_best
     Answer.transaction do

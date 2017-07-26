@@ -1,0 +1,5 @@
+h3 
+ = "#{@search_results.size} items found:"
+- @search_results.each do |result|
+ p
+   = link_to result.class.to_s, result rescue result.to_s

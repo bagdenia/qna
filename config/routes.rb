@@ -10,6 +10,10 @@ Rails.application.routes.draw do
     post '/register' => 'omniauth_callbacks#register'
   end
 
+  get '/search' => 'thinking_sphinx#search'
+
+
+
   # resources :votes, only: [:create, :destroy]
 
   resources :questions, shallow: true do

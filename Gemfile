@@ -36,6 +36,8 @@ gem 'oj_mimic_json'
 gem 'sidekiq'
 gem 'whenever'
 gem 'sinatra', '>= 1.3.0', require: nil
+gem 'mysql2'
+gem 'thinking-sphinx'
 # gem 'sidetiq'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby

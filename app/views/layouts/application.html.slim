@@ -26,6 +26,8 @@ html
            //= link_to "QnA", root_path, class: 'brand'
       li = link_to 'API adminka', "http://localhost:4000/oauth/applications/"
       li = link_to 'Sidekiq', "http://localhost:4000/sidekiq" if current_user&.admin?
+      li
+        = render 'thinking_sphinx/search'
      .container.nav-collapse
        .row
        .container
