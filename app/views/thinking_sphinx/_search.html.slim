@@ -1,3 +1,7 @@
-= form_tag search_path, method: :get do
-  = text_field_tag 'search_string', params[:search_string]
+= form_tag search_path, method: :get, class: 'navbar-form' do
+  = text_field_tag 'search_string', params[:search_string], required: true
+
+  = select_tag :condition, 
+    options_for_select(%w(Everywhere Questions Answers Comments Users), 
+                            params[:condition]), prompt: 'Search in'
   = submit_tag 'Search'

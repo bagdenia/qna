@@ -77,7 +77,7 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'pry-rails'
   #gem 'pry-byebug'
-  #gem 'capybara-webkit'
+  # gem 'capybara-webkit'
   gem 'selenium-webdriver'
   gem "letter_opener"
   #gem 'poltergeist'
