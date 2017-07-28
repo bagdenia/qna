@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ThinkingSphinxController, type: :controller do
+RSpec.describe SearchController, type: :controller do
 
   describe 'GET #search' do
     it 'get search everywhere with empty condition' do
@@ -26,6 +26,11 @@ RSpec.describe ThinkingSphinxController, type: :controller do
         get :search, params: {search_string: 'ask', condition: attr}
         expect(response).to render_template :search
       end
+    end
+
+    it "gets condition: noname" do
+      expect(ThinkingSphinx).to receive(:search).with('ask')
+      get :search, params: {search_string: 'ask', condition: 'Noname'}
     end
   end
 

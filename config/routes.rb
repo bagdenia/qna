@@ -10,7 +10,7 @@ Rails.application.routes.draw do
     post '/register' => 'omniauth_callbacks#register'
   end
 
-  get '/search' => 'thinking_sphinx#search'
+  get '/search' => 'search#search'
 
 
 

@@ -14,7 +14,7 @@ class Ability
 
   def guest_abilities
     can :read, :all
-    can :search, ThinkingSphinx
+    can :search, Search
     cannot :manage, :profile
   end
 
