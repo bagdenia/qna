@@ -38,6 +38,9 @@ gem 'whenever'
 gem 'sinatra', '>= 1.3.0', require: nil
 gem 'mysql2'
 gem 'thinking-sphinx'
+gem 'dotenv'
+gem 'dotenv-deployment', require: 'dotenv/deployment'
+
 # gem 'sidetiq'
 # See https://github.com/rails/execjs#readme for more supported runtimes
 # gem 'therubyracer', platforms: :ruby
@@ -81,6 +84,14 @@ group :development, :test do
   gem 'selenium-webdriver'
   gem "letter_opener"
   #gem 'poltergeist'
+end
+
+group :development do
+  gem 'capistrano', require: false
+  gem 'capistrano-bundler', require: false
+  gem 'capistrano-rails', require: false
+  gem 'capistrano-rvm', require: false
+  gem 'capistrano-sidekiq', require: false
 end
 
 
