@@ -40,6 +40,7 @@ gem 'mysql2'
 gem 'thinking-sphinx'
 gem 'dotenv'
 gem 'dotenv-deployment', require: 'dotenv/deployment'
+gem 'therubyracer'
 
 # gem 'sidetiq'
 # See https://github.com/rails/execjs#readme for more supported runtimes
