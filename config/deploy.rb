@@ -9,7 +9,7 @@ set :log_level, :debug
 
 set :deploy_user, 'deployer'
 
-set :linked_files, %w{config/database.yml .env config/thinking_sphinx.yml}
+set :linked_files, %w{config/database.yml .env config/thinking_sphinx.yml config/production.sphinx.conf}
 set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
 
 namespace :deploy do
@@ -25,4 +25,4 @@ namespace :deploy do
 
   after :publishing, :restart
 end
-# after 'deploy:restart', 'thinking_sphinx:restart'
+after 'deploy:restart', 'thinking_sphinx:restart'
