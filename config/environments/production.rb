@@ -32,8 +32,8 @@ Rails.application.configure do
   #     :user_name            => '',
   #     :password             => ''
   # }
-  #
-  # config.action_mailer.default_url_options = { host: 'qna.net.ru', port: 8080 }
+
+  config.action_mailer.default_url_options = { host: 'qna.net.ru'}
   # Disable serving static files from the `/public` folder by default since
   # Apache or NGINX already handles this.
   config.public_file_server.enabled = ENV['RAILS_SERVE_STATIC_FILES'].present?
