@@ -6,4 +6,3 @@ test:
 
 production:
   adapter: redis
-  url: redis://qna.net.ru:6379/1
