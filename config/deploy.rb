@@ -10,7 +10,15 @@ set :log_level, :debug
 set :deploy_user, 'deployer'
 
 set :linked_files, %w{config/database.yml .env config/thinking_sphinx.yml config/production.sphinx.conf}
-set :linked_dirs, %w{bin log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
+set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system public/uploads}
+
+set :sidekiq_processes, 4
+set :sidekiq_options_per_process, [
+  "--queue default",
+  "--queue send_email",
+  "--queue update_stats",
+  "--queue generate_report",
+]
 
 namespace :deploy do
 
