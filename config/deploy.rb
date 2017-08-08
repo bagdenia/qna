@@ -15,9 +15,8 @@ set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/sys
 set :sidekiq_processes, 4
 set :sidekiq_options_per_process, [
   "--queue default",
-  "--queue send_email",
-  "--queue update_stats",
-  "--queue generate_report",
+  "--queue daily_digest",
+  "--queue new_answer"
 ]
 
 namespace :deploy do
