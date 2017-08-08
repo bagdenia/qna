@@ -1,5 +1,5 @@
 class NewAnswerJob < ApplicationJob
-  queue_as :new_answer
+  queue_as :mailers
 
   def perform(answer)
     answer.question.subscriptions.map{|sub| sub.user}.each do |user|
