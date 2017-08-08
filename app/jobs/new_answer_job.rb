@@ -1,5 +1,5 @@
 class NewAnswerJob < ApplicationJob
-  queue_as :default
+  queue_as :new_answer
 
   def perform(answer)
     answer.question.subscriptions.map{|sub| sub.user}.each do |user|
