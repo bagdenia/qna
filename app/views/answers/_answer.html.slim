@@ -1,7 +1,8 @@
-    .row id = "answer-#{answer.id}"
-      p
-      -if answer.persisted?
-        .row
+    -if answer.persisted?
+      -cache answer do
+        .row id = "answer-#{answer.id}"
+          /p
+          .row
             .votes
               .col-md-1 = render 'partials/voting', item: answer
             .col-md-3 = answer.body
@@ -20,22 +21,22 @@
                 =link_to 'edit', '', class: 'edit-answer-link', data: { answer_id: answer.id }
             .col-md-4  = render 'partials/show_files', item: answer
 
-        .row
-          .col-md-2
-            = link_to 'Show comments', '', class: 'show-comments-link', data: { votable_type: 'answer', votable_id: answer.id } 
-          .col-md-2
-            -if can?(:create, Comment)
-              = link_to 'New comment', '', class: 'new-comment-link', data: { votable_type: 'answer', votable_id: answer.id } 
-        .comments id = "answer#{answer.id}_comments"
-          h5 = 'Comments:'
-          = render answer.comments
+          .row
+            .col-md-2
+              = link_to 'Show comments', '', class: 'show-comments-link', data: { votable_type: 'answer', votable_id: answer.id } 
+            .col-md-2
+              -if can?(:create, Comment)
+                = link_to 'New comment', '', class: 'new-comment-link', data: { votable_type: 'answer', votable_id: answer.id } 
+          .comments id = "answer#{answer.id}_comments"
+            h5 = 'Comments:'
+            = render answer.comments
 
-        
-        = render 'comments/new_comment', commentable: answer
-        .row
-          -if can?(:update, answer)
-            = form_for [answer], remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
-              = f.label :body, 'Answer'
-              = f.text_area :body
-              = f.submit 'Save'
+          
+          = render 'comments/new_comment', commentable: answer
+          .row
+            -if can?(:update, answer)
+              = form_for [answer], remote: true, html: { id: "edit-answer-#{answer.id}"} do |f|
+                = f.label :body, 'Answer'
+                = f.text_area :body
+                = f.submit 'Save'
 

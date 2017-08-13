@@ -1,40 +1,41 @@
-h2 = 'Question:'
-p = @question.title
-p = @question.body
-p Attachments:
-ul
-  = render 'partials/show_files', item: @question
+- cache @question do
+  h2 = 'Question:'
+  p = @question.title
+  p = @question.body
+  p Attachments:
+  ul
+    = render 'partials/show_files', item: @question
 
-.row.show-comments-question
-  .col-md-2
-    = link_to 'Show comments', '', class: 'show-comments-link', data: { votable_type: 'question', votable_id: @question.id } 
-  .col-md-2
-    - if can?(:create, Comment)
-      = link_to 'New comment', '', class: 'new-comment-link', data: { votable_type: 'question', votable_id: @question.id } 
-.comments id = "question#{@question.id}_comments"
-  h5 = 'Comments:'
-  = render @question.comments
+  .row.show-comments-question
+    .col-md-2
+      = link_to 'Show comments', '', class: 'show-comments-link', data: { votable_type: 'question', votable_id: @question.id } 
+    .col-md-2
+      - if can?(:create, Comment)
+        = link_to 'New comment', '', class: 'new-comment-link', data: { votable_type: 'question', votable_id: @question.id } 
+  .comments id = "question#{@question.id}_comments"
+    h5 = 'Comments:'
+    = render @question.comments
 
-= render 'comments/new_comment', commentable: @question
+  = render 'comments/new_comment', commentable: @question
 
-h2 = 'Answers:'
-.answr
-  div id = "table-answers"
-    = render @question.answers 
+  h2 = 'Answers:'
+  .answr
+    div id = "table-answers"
+      = render @question.answers 
 
 
--if can?(:create, Answer)
-  =form_for [@question, @answer], remote: true do |f|
-    = f.label :body, 'Your answer'
-    .errors
-    = f.text_area :body
-    p
-      = f.fields_for :attachments, @answer.attachments.build do |a|
-      = link_to_add_association 'add file', f, :attachments, partial: 'partials/add_file'
-    = f.submit 'Create'
-br
+  -if can?(:create, Answer)
+    =form_for [@question, @answer], remote: true do |f|
+      = f.label :body, 'Your answer'
+      .errors
+      = f.text_area :body
+      p
+        = f.fields_for :attachments, @answer.attachments.build do |a|
+        = link_to_add_association 'add file', f, :attachments, partial: 'partials/add_file'
+      = f.submit 'Create'
+  br
 
-= link_to 'List of questions', questions_path
+  = link_to 'List of questions', questions_path
 
 
 

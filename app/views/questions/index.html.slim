@@ -1,8 +1,9 @@
 h2 = 'Questions:'
 .qstn
-  - @questions.each do |question|
-    p
-      = render question
+  - cache collection_cache_key_for :question do
+    - @questions.each do |question|
+      p
+        = render question
 
 
 

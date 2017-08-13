@@ -1,4 +1,5 @@
-  .row.h6 id = "comment-#{comment.id}" 
-    -if comment.persisted?
+-if comment.persisted?
+  -cache comment do
+    .row.h6 id = "comment-#{comment.id}" 
       .col-md-1
       .col-md-3 = comment.body
