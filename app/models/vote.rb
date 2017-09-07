@@ -1,6 +1,6 @@
 class Vote < ApplicationRecord
   belongs_to :user
-  belongs_to :votable, polymorphic: true
+  belongs_to :votable, polymorphic: true, touch: true
 
   validates :user, :votable, :votable_type, presence: true
   validates :user_id, uniqueness: { scope: [:votable_id, :votable_type] }
