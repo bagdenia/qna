@@ -7,5 +7,5 @@
   $(".new_comment").hide()
   $(".new-comment-link").show()
 
-  $('#comment_body').val('');
+  $("#<%= @comment.commentable_type.downcase + @comment.commentable_id.to_s %>-new-comment").find('#comment_body').val('');
 <% end %>
