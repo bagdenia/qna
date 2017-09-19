@@ -1,7 +1,10 @@
-          -item.attachments.each do |a|
+          -item.attachments.each_with_index do |a, i|
             div  id = "file-#{a.id}"
-              = link_to a.file.filename, a.file.url 
-              = ' '
-              -if can?(:destroy, a)
-                =link_to 'delete', a, data: {confirm: 'Are you sure?'}, method: :delete, remote: true, class: 'delete_file'
+              .row
+                .col-md-2.color.red
+                  = link_to "Image #{i+1}", a.file.url 
+                /= ' '
+                .col-md-1.small
+                  -if can?(:destroy, a)
+                    =link_to 'delete', a, data: {confirm: 'Are you sure?'}, method: :delete, remote: true, class: 'delete_file'
 

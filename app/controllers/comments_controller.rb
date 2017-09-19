@@ -1,6 +1,6 @@
 class CommentsController < ApplicationController
   before_action :authenticate_user!, except: [:show]
-  before_action :load_comment, only: [:show]
+  before_action :load_comment, only: [:show, :destroy]
   before_action :load_commentable, only: :create
   after_action :publish_comment, only: :create
 
@@ -9,6 +9,10 @@ class CommentsController < ApplicationController
 
   def create
     respond_with(@comment= @commentable.comments.create(comment_params.merge(user: current_user)))
+  end
+
+  def destroy
+    respond_with(@comment.destroy)
   end
 
 

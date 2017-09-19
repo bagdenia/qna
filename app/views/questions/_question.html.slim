@@ -2,15 +2,15 @@
   .row
     .votes
       .col-md-1 = render 'partials/voting', item: question
-    .col-md-4 = link_to question.title, question
+    .col-md-2 = link_to question.title, question
     .col-md-1.small 
       -if can?(:destroy, question)
         =link_to 'delete', question, data: {confirm: 'Are you sure?'}, method: :delete
     .col-md-1.small 
       -if can?(:update, question)
         =link_to 'edit', '', class: 'edit-question-link', data: { question_id: question.id }
-    .col-md-4 = render 'partials/show_files', item: question
-    .col-md-4 = render 'subscriptions/subscription', item: question
+    .col-md-2 = render 'subscriptions/subscription', item: question
+    .col-md-5 = render 'partials/show_files', item: question
 
   .row
     -if can?(:update, question)

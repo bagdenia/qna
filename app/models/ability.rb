@@ -20,6 +20,7 @@ class Ability
 
   def admin_abilities
     can :manage, :all
+    can :destroy, Comment
   end
 
   def user_abilities
@@ -36,7 +37,7 @@ class Ability
     can :set_best, Answer do |answer|
       answer.question.user_id == user.id
     end
-    can :destroy, [Question, Answer], user_id: user.id
+    can :destroy, [Question, Answer, Comment], user_id: user.id
     can :destroy, Attachment do |att|
       att.attachmentable.user_id == user.id
     end

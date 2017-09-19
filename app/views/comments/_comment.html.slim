@@ -3,3 +3,6 @@
     .row.h6 id = "comment-#{comment.id}" 
       .col-md-1
       .col-md-3 = comment.body
+      .col-md-1.small
+        -if can?(:destroy, comment)
+          =link_to 'delete', comment, data: {confirm: 'Are you sure?'}, method: :delete, remote: true, class: 'delete_comment'
