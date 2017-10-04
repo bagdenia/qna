@@ -1,0 +1,10 @@
+<% if @atm.errors.present? %>
+  <% @atm.errors.full_messages.each do |message| %>
+    $('.errors').html('<%= j message %>')
+  <% end %>
+<% else %>
+  $('.atm:first').prepend('<%= j render @atm %>');
+  $('#atm_lat').val('');
+  $('#atm_lng').val('');
+  $('#atm_address').val('');
+<% end %>

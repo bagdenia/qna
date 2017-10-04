@@ -1,0 +1,14 @@
+= link_to 'Back to the future', atms_path
+= form_tag closest_atms_path, class: 'closest-atms', method: :get do
+  h1 Indicate your position
+  = label_tag 'lat'
+  = number_field_tag'lat', nil,  step: 0.01
+  = label_tag 'lng'
+  = number_field_tag 'lng', nil, step: 0.01
+  = submit_tag 'Submit'
+
+p
+- if @atms
+  - @atms.each do |atm|
+    .closest-item
+      p = atm[0].address + ':  ' + atm[0].lat.to_s + ', ' + atm[0].lng.to_s + ', distance: ' + atm[1].to_i.to_s + ' meters'

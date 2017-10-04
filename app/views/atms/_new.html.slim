@@ -1,0 +1,13 @@
+= form_for Atm.new, remote: true do |f|
+  p
+    = f.label :address
+    = f.text_field :address
+  p
+    = f.label :lat
+    = f.text_area :lat
+
+  p
+    = f.label :lng
+    = f.text_area :lng
+
+  = f.submit 'Create'

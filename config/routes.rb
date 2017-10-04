@@ -13,8 +13,10 @@ Rails.application.routes.draw do
   get '/search' => 'search#search'
 
 
-
   # resources :votes, only: [:create, :destroy]
+  resources :atms do
+    get :closest, on: :collection
+  end
 
   resources :questions, shallow: true do
     resources :comments, defaults: {commentable: 'questions'}

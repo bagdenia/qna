@@ -1,0 +1,10 @@
+.errors
+.panel.panel-default
+  .panel-heading
+    = link_to 'Search closest', closest_atms_path
+    = render 'new'
+    h4 = 'ATM list: '
+  .panel-body.atms style=("max-height: 500px; overflow-y: scroll")
+    p.atm
+    - @atms.each do |atm|
+      = render atm
