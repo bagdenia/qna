@@ -6,7 +6,7 @@ class Atm < ApplicationRecord
 
   def self.get_closest(lat, lng)
     return [] if !lat || !lng || !((-90..90).cover? lat) || !((-180..180).cover? lng)
-    Rails.cache.fetch("#{lat}_#{lng}/get_closet", expires_in: 12.hours) do
+    Rails.cache.fetch("#{collection_cache_key_for(:atm)}_#{lat}_#{lng}/get_closet", expires_in: 12.hours) do
       Hash[self.all.map{ |e| [e, distance_between(lat, e.lat, lng, e.lng)] }].sort_by{ |k,v| v }.take(5)
     end
   end
